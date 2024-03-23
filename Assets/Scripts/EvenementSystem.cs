@@ -102,6 +102,7 @@ public class Evenement :MonoBehaviour
 public class EvenementSystem : MonoBehaviour
 {
     [SerializeField] private RoomSystem _roomSystem;
+    [SerializeField] private List<float> _timersList = new();
 
     [SerializeField] private int maxEvenements = 0;
     private int totalEvents = 0;
@@ -111,7 +112,6 @@ public class EvenementSystem : MonoBehaviour
 
     Evenement _eventType1 = new Evenement(EventList.EventFireFighter);
 
-    private List<float> _timersList = new();
 
     [SerializeField] private int _gracePeriods = 0;
     [SerializeField] private float _graceTimeModifier = 0.0f;
@@ -145,7 +145,8 @@ public class EvenementSystem : MonoBehaviour
 
     void addEvents(Room room)
     {
-        AddEventTypetoRoom(room, new Evenement(EventList.EventPolice));
+        
+        AddEventTypetoRoom(room, new Evenement((EventList)Random.Range(0, 3)));
     }
     void AddEventTypetoRoom(Room room, Evenement evenement)
     {
