@@ -133,6 +133,11 @@ public class Room : MonoBehaviour
             this._evenement.EvenementUpdate();
         }
     }
+
+    public bool CanReceiveResource()
+    {
+        return this._evenement != null && this._evenement.eventIsAlive;
+    }
 } 
 public class RoomSystem : MonoBehaviour
 {
