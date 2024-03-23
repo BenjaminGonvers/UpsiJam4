@@ -477,7 +477,7 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 3349848094552675937, guid: 3c166f30405cc2d40bf9ebac7345f81b,
+    - targetCorrespondingSourceObject: {fileID: 670822278665722298, guid: 3c166f30405cc2d40bf9ebac7345f81b,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
@@ -738,13 +738,13 @@ MonoBehaviour:
     m_RotationOrder: 4
   _roomSystem: {fileID: 1248815827}
   _timersList:
-  - 10
-  - 15
-  - 20
-  maxEvenements: 2
+  - 1
+  - 2
+  - 3
+  maxEvenements: 99
   tickTime: 0
-  baseTimerCooldown: 0
-  curveIntensity: 0
+  baseTimerCooldown: 20
+  curveIntensity: 5.1
 --- !u!4 &2112851411
 Transform:
   m_ObjectHideFlags: 0
