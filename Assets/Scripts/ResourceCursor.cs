@@ -18,7 +18,7 @@ public class ResourceCursor : MonoBehaviour
                 GetComponent<SpriteRenderer>().enabled = true;
             }
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            transform.position = new Vector3(mousePos.x, mousePos.y, 0);
+            transform.position = new Vector3(mousePos.x, mousePos.y, -9);
         }
         else if (GetComponent<SpriteRenderer>().enabled)
         {
