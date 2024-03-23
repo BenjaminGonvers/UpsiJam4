@@ -44,6 +44,16 @@ public class Room : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = Color.yellow;
     }
 
+    void SetDead()
+    {
+        this.GetComponent<SpriteRenderer>().color = Color.grey;
+    }
+
+    void SetAlive()
+    {
+        this.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
     void ClearEvent()
     {
         this._evenement = null;
@@ -94,6 +104,19 @@ public class Room : MonoBehaviour
                         break;
                     case EventState.EventBreach:
                         this.RoomBreaching();
+                        break;
+                }
+            }
+
+            if (!_evenement.eventIsAlive)
+            {
+                switch (_evenement.GetEventState())
+                {
+                    case EventState.EventConfining:
+                        this.SetAlive();
+                        break;
+                    case EventState.EventBreach:
+                        this.SetDead();
                         break;
                 }
             }
