@@ -81,23 +81,26 @@ public class RessourceSystem : MonoBehaviour
                 if (room != null)
                 {
                     Debug.Log("Room found");
-                    if (SwatTaken >0)
+                    if (room.CanReceiveResource())
                     {
-                        room.GiveResource(ResourceType.Swat, SwatTaken);
-                        RessourceSwat -= SwatTaken;
-                        SwatTaken = 0;
-                    }
-                    else if (PoliceTaken > 0)
-                    {
-                        room.GiveResource(ResourceType.Police, PoliceTaken);
-                        RessourcePolice -= PoliceTaken;
-                        PoliceTaken = 0;
-                    }
-                    else if (FirefighterTaken > 0)
-                    {
-                        room.GiveResource(ResourceType.Firefighter, FirefighterTaken);
-                        RessourceFirefighter -= FirefighterTaken;
-                        FirefighterTaken = 0;
+                        if (SwatTaken > 0)
+                        {
+                            room.GiveResource(ResourceType.Swat, SwatTaken);
+                            RessourceSwat -= SwatTaken;
+                            SwatTaken = 0;
+                        }
+                        else if (PoliceTaken > 0)
+                        {
+                            room.GiveResource(ResourceType.Police, PoliceTaken);
+                            RessourcePolice -= PoliceTaken;
+                            PoliceTaken = 0;
+                        }
+                        else if (FirefighterTaken > 0)
+                        {
+                            room.GiveResource(ResourceType.Firefighter, FirefighterTaken);
+                            RessourceFirefighter -= FirefighterTaken;
+                            FirefighterTaken = 0;
+                        }
                     }
                 }
             }

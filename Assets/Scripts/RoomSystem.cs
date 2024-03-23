@@ -7,12 +7,18 @@ using System.Xml.Linq;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Android;
 
 public class Room : MonoBehaviour
 {
+    List<int> quantities;
+    List<RessourceSystem.ResourceType>  resourcesTypes;
+
     private RoomSystem _system;
     private GameObject _logoEvent;
     private Evenement _evenement;
+
+
 
     private bool isDestroy = false;
     private bool hasEvent = false;
@@ -32,6 +38,9 @@ public class Room : MonoBehaviour
     void Start()
     {
         this.GetComponent<SpriteRenderer>().color = Color.white;
+
+        this.quantities = new List<int>();
+        this.resourcesTypes = new List<RessourceSystem.ResourceType>();
     }
 
     public void SetEvenement(Evenement evenement)
@@ -68,6 +77,27 @@ public class Room : MonoBehaviour
         this.hasEvent = false;
         Destroy(_logoEvent);
         _logoEvent = null;
+
+        RessourceSystem resourceSystem = this._system.GetResourceSystem();
+        //Give Resource
+        for (int i = 0; i < quantities.Count; i++)
+        {
+            switch (resourcesTypes[i])
+            {
+                case RessourceSystem.ResourceType.Police:
+                    resourceSystem.AddResourcePolice(quantities[i]);
+                    break;
+                case RessourceSystem.ResourceType.Firefighter:
+                    resourceSystem.AddResourceFirefighter(quantities[i]);
+                    break;
+                case RessourceSystem.ResourceType.Swat:
+                    resourceSystem.AddResourceSwat(quantities[i]);
+                    break;
+            }  
+        }
+
+        this.quantities.Clear();
+        this.resourcesTypes.Clear();
     }
 
     public void GiveResource(RessourceSystem.ResourceType type, int quantity)
@@ -86,6 +116,10 @@ public class Room : MonoBehaviour
                 break;
         }
         Debug.Log(resourceType + " send: " + quantity);
+        
+        this.quantities.Add(quantity);
+        this.resourcesTypes.Add(type);
+
         this._typeResource = type;
         this._quantity = quantity;
 
@@ -133,6 +167,11 @@ public class Room : MonoBehaviour
             this._evenement.EvenementUpdate();
         }
     }
+
+    public bool CanReceiveResource()
+    {
+        return this._evenement != null && this._evenement.eventIsAlive;
+    }
 } 
 public class RoomSystem : MonoBehaviour
 {
@@ -142,19 +181,26 @@ public class RoomSystem : MonoBehaviour
     [SerializeField] private GameObject _prefab_logo_labotaryBroken;
 
     List<Room> rooms;
+
+    private RessourceSystem _resourceSystem;
     // Start is called before the first frame update
     void Start()
     {
+        _resourceSystem = GameObject.Find("RessourceSystem").GetComponent<RessourceSystem>();
         rooms = new List<Room>();
         GameObject[] items = GameObject.FindGameObjectsWithTag("Room");
 
         foreach (var item in items)
         {
-
             item.AddComponent<Room>();
             item.GetComponent<Room>().SetSystem(this);
             rooms.Add(item.GetComponent<Room>());
         }
+    }
+
+    public RessourceSystem GetResourceSystem()
+    {
+        return this._resourceSystem;
     }
 
     public int RoomNumber()
