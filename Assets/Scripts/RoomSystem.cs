@@ -35,6 +35,11 @@ public class Room : MonoBehaviour
         this.hasEvent = true;
     }
 
+    void SetConfining()
+    {
+        this.GetComponent<SpriteRenderer>().color = Color.yellow;
+    }
+
     void ClearEvent()
     {
         this._evenement = null;
@@ -56,6 +61,22 @@ public class Room : MonoBehaviour
         this._evenement.AddUnitToEvent((int)_typeResource, quantity);
     }
 
+
+    void Update()
+    {
+        if (_evenement.eventIsAlive)
+        {
+            switch (_evenement.GetEventState())
+            {
+                case EventState.EventConfining:
+                    this.SetConfining();
+                    break;
+                case EventState.EventBreach:
+                    this.Destroy();
+                    break;
+            }
+        }
+    }
 } 
 public class RoomSystem : MonoBehaviour
 {
