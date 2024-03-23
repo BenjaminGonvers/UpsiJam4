@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
 using System.Threading;
+using UnityEditor;
 using UnityEngine;
 
 
@@ -11,9 +12,21 @@ public enum EventList : int
     EventPolice = 1,
     EventFireFighter = 2
 }
+
+public enum EventState
+{
+    EventNotActive = 0,
+    EventActive = 1,
+    EventResolving = 2
+}
+
 public class Evenement
 {
+    public bool eventIsAlive;
     public EventList eventType = 0;
+    public EventState eventState = 0;
+
+
     public float eventMaxTime = 0.0f;
     private float timer = 0.0f;
 
@@ -49,6 +62,46 @@ public class Evenement
             unitOnSite += UnitNumber * badUnitModifier;
         }
     }
+
+    void Update()
+    {
+        //Just debug
+        if(eventState == EventState.EventNotActive)
+        {
+            Debug.Log("Error, event not active, not possible");
+            return;
+        }
+
+        //Check if this room is being resolved or not
+        if(unitOnSite >= numberOfUnitNeeded)
+        {
+            eventState = EventState.EventResolving;
+        }
+        else
+        {
+            eventState = EventState.EventActive;
+        }
+
+        //Increments or decrements the timer
+        if (eventState == EventState.EventActive)
+        {
+            timer += Time.deltaTime;
+        }
+        if (eventState == EventState.EventResolving)
+        {
+            timer -= Time.deltaTime;
+        }
+
+        //Check if event got resolved or breached containment
+        if(timer <= 0 || timer >= eventMaxTime)
+        {
+            eventIsAlive = true;
+        }
+    }
+
+
+    public float GetEventMaxTime() {  return eventMaxTime; }
+    public float GetEventActualTimer() { return timer; }
 
 }
 
@@ -98,7 +151,7 @@ public class EvenementSystem : MonoBehaviour
 
     void addEvents(Room room)
     {
-        AddEventTypetoRoom(room, _eventType1);
+        AddEventTypetoRoom(room, new Evenement(EventList.EventPolice));
     }
     void AddEventTypetoRoom(Room room, Evenement evenement)
     {
