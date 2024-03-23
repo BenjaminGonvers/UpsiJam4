@@ -108,7 +108,7 @@ public class RoomSystem : MonoBehaviour
         foreach (var item in items)
         {
             item.AddComponent<Room>();
-            //rooms.Add(new Room(item));
+            rooms.Add(item.GetComponent<Room>());
         }
     }
 
