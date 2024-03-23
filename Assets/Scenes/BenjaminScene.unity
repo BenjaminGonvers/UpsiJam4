@@ -526,12 +526,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3199943584882663654, guid: f9894418de453a8418cbd37c0adca66d,
-        type: 3}
-      propertyPath: m_text
-      value: New week, all is well and all will be well, you are not going to die
-        from radiation, fires, mutant creature or the worst human pacifique manifestation.
-      objectReference: {fileID: 0}
     - target: {fileID: 3790408806032039763, guid: f9894418de453a8418cbd37c0adca66d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -581,32 +575,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4505368286440077309, guid: f9894418de453a8418cbd37c0adca66d,
-        type: 3}
-      propertyPath: Speed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4505368286440077309, guid: f9894418de453a8418cbd37c0adca66d,
-        type: 3}
-      propertyPath: TimeBetweenWarning
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 4505368286440077309, guid: f9894418de453a8418cbd37c0adca66d,
-        type: 3}
-      propertyPath: WarningList.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4505368286440077309, guid: f9894418de453a8418cbd37c0adca66d,
-        type: 3}
-      propertyPath: WarningList.Array.data[0]
-      value: 'Warning: A Big Breasted Gardevoir has breached confinement'
-      objectReference: {fileID: 0}
-    - target: {fileID: 4505368286440077309, guid: f9894418de453a8418cbd37c0adca66d,
-        type: 3}
-      propertyPath: WarningList.Array.data[1]
-      value: 'Warning: Level of Radiation lowering, due to that salary too, because
-        of the lack of danger'
       objectReference: {fileID: 0}
     - target: {fileID: 6804854725748587868, guid: f9894418de453a8418cbd37c0adca66d,
         type: 3}
