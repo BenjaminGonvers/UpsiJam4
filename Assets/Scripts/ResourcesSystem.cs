@@ -33,8 +33,8 @@ public class RessourceSystem : MonoBehaviour
     public ResourceCursor ResourceCursor;
 
     private bool MouseRightDown = false;
-    
 
+    private GameManager _gameManager;
     public void AddResourceSwat(int ressource)
     {
         RessourceSwat += ressource;
@@ -65,102 +65,107 @@ public class RessourceSystem : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButtonUp(0))
+        if (!_gameManager.GetPause())
         {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-            if (hit.collider != null)
+            if (Input.GetMouseButtonUp(0))
             {
-                Debug.Log ("Target Position: " + hit.collider.gameObject.transform.position);
-                Room room = hit.collider.GetComponent<Room>();
-                if (room != null)
+                RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+                if (hit.collider != null)
                 {
-                    Debug.Log("Room found");
-                    if (room.CanReceiveResource())
+                    Debug.Log("Target Position: " + hit.collider.gameObject.transform.position);
+                    Room room = hit.collider.GetComponent<Room>();
+                    if (room != null)
                     {
-                        if (SwatTaken > 0)
+                        Debug.Log("Room found");
+                        if (room.CanReceiveResource())
                         {
-                            room.GiveResource(ResourceType.Swat, SwatTaken);
-                            RessourceSwat -= SwatTaken;
-                            SwatTaken = 0;
-                        }
-                        else if (PoliceTaken > 0)
-                        {
-                            room.GiveResource(ResourceType.Police, PoliceTaken);
-                            RessourcePolice -= PoliceTaken;
-                            PoliceTaken = 0;
-                        }
-                        else if (FirefighterTaken > 0)
-                        {
-                            room.GiveResource(ResourceType.Firefighter, FirefighterTaken);
-                            RessourceFirefighter -= FirefighterTaken;
-                            FirefighterTaken = 0;
+                            if (SwatTaken > 0)
+                            {
+                                room.GiveResource(ResourceType.Swat, SwatTaken);
+                                RessourceSwat -= SwatTaken;
+                                SwatTaken = 0;
+                            }
+                            else if (PoliceTaken > 0)
+                            {
+                                room.GiveResource(ResourceType.Police, PoliceTaken);
+                                RessourcePolice -= PoliceTaken;
+                                PoliceTaken = 0;
+                            }
+                            else if (FirefighterTaken > 0)
+                            {
+                                room.GiveResource(ResourceType.Firefighter, FirefighterTaken);
+                                RessourceFirefighter -= FirefighterTaken;
+                                FirefighterTaken = 0;
+                            }
                         }
                     }
                 }
+                MouseRightDown = false;
             }
-            MouseRightDown = false;
-        }
-        
-        if (SwatContainer.IsTaken && SwatTaken == 0 && RessourceSwat > 0)
-        {
-            SwatTaken = 1;
-            ResourceCursor.IsVisible = true;
 
-        }else if(!SwatContainer.IsTaken)
-        {
-            SwatTaken = 0;
-        }
-
-        if (PoliceContainer.IsTaken && PoliceTaken == 0 && RessourcePolice > 0)
-        {
-            PoliceTaken = 1;
-            ResourceCursor.IsVisible = true;
-        }else if(!PoliceContainer.IsTaken)
-        {
-            PoliceTaken = 0;
-        }
-
-        if (FirefighterContainer.IsTaken && FirefighterTaken == 0 && RessourceFirefighter > 0)
-        {
-            FirefighterTaken = 1;
-            ResourceCursor.IsVisible = true;
-        }
-        else if(!FirefighterContainer.IsTaken)
-        {
-            FirefighterTaken = 0;
-        }
-
-        if (PoliceTaken == 0 && SwatTaken == 0 && FirefighterTaken == 0)
-        {
-            ResourceCursor.IsVisible = false;
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (SwatTaken > 0 && SwatTaken < RessourceSwat)
+            if (SwatContainer.IsTaken && SwatTaken == 0 && RessourceSwat > 0)
             {
-                SwatTaken ++;
+                SwatTaken = 1;
+                ResourceCursor.IsVisible = true;
+
+            }
+            else if (!SwatContainer.IsTaken)
+            {
+                SwatTaken = 0;
             }
 
-            if (PoliceTaken > 0 && PoliceTaken < RessourcePolice)
+            if (PoliceContainer.IsTaken && PoliceTaken == 0 && RessourcePolice > 0)
             {
-                PoliceTaken ++;
+                PoliceTaken = 1;
+                ResourceCursor.IsVisible = true;
+            }
+            else if (!PoliceContainer.IsTaken)
+            {
+                PoliceTaken = 0;
             }
 
-            if (FirefighterTaken > 0 && FirefighterTaken < RessourceFirefighter)
+            if (FirefighterContainer.IsTaken && FirefighterTaken == 0 && RessourceFirefighter > 0)
             {
-                FirefighterTaken ++;
+                FirefighterTaken = 1;
+                ResourceCursor.IsVisible = true;
             }
+            else if (!FirefighterContainer.IsTaken)
+            {
+                FirefighterTaken = 0;
+            }
+
+            if (PoliceTaken == 0 && SwatTaken == 0 && FirefighterTaken == 0)
+            {
+                ResourceCursor.IsVisible = false;
+            }
+
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (SwatTaken > 0 && SwatTaken < RessourceSwat)
+                {
+                    SwatTaken++;
+                }
+
+                if (PoliceTaken > 0 && PoliceTaken < RessourcePolice)
+                {
+                    PoliceTaken++;
+                }
+
+                if (FirefighterTaken > 0 && FirefighterTaken < RessourceFirefighter)
+                {
+                    FirefighterTaken++;
+                }
+            }
+
+            SwatContainer.VisibleRessource = RessourceSwat - SwatTaken;
+            PoliceContainer.VisibleRessource = RessourcePolice - PoliceTaken;
+            FirefighterContainer.VisibleRessource = RessourceFirefighter - FirefighterTaken;
         }
-
-        SwatContainer.VisibleRessource = RessourceSwat - SwatTaken;
-        PoliceContainer.VisibleRessource = RessourcePolice - PoliceTaken;
-        FirefighterContainer.VisibleRessource = RessourceFirefighter - FirefighterTaken;
     }
 }

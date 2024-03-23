@@ -19,7 +19,8 @@ public enum EventList : int
 {
     EventSwat = 0,
     EventPolice = 1,
-    EventFireFighter = 2
+    EventFireFighter = 2,
+    Count = 3
 }
 
 public enum EventState
@@ -117,6 +118,8 @@ public class EvenementSystem : MonoBehaviour
 {
     [SerializeField] AnimationCurve difficultyCurve;
     private float gameTimer = 0.0f;
+    private GameManager _gameManager;
+
     [SerializeField] private RoomSystem _roomSystem;
     [SerializeField] List<float> _timersList;
     [SerializeField] private int maxEvenements = 0;
@@ -129,8 +132,13 @@ public class EvenementSystem : MonoBehaviour
 
     [SerializeField] float baseTimerCooldown = 0.0f;
 
-    // Sera divisé par 100 et extrait à base timer, 100/100 = 1s, 100/50 = 2, 100/10 = 10 (Basetimer - curve value / curve intensity)
+    // Sera divisï¿½ par 100 et extrait ï¿½ base timer, 100/100 = 1s, 100/50 = 2, 100/10 = 10 (Basetimer - curve value / curve intensity)
     [SerializeField] float curveIntensity = 0.0f;
+
+    private void Start()
+    {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+    }
 
     void Update()
     {
@@ -150,11 +158,15 @@ public class EvenementSystem : MonoBehaviour
                 {
                     if (totalEvents < maxEvenements)
                     {
-                        Room myRoom = _roomSystem.GetRandomRoom();
-                        if (!myRoom.GetHasEvent())
+                        _timersList[i] -= tickTimer;
+                        if (_timersList[i] <= 0)
                         {
+                            Room myRoom = _roomSystem.GetRandomRoom();
+                            if (!myRoom.GetHasEvent())
+                            {
 
-                            addEvents(_roomSystem.GetRandomRoom());
+                                addEvents(_roomSystem.GetRandomRoom());
+                            }
                         }
                     }
                     _timersList[i] = baseTimerCooldown - curveValue / curveIntensity;
@@ -168,14 +180,31 @@ public class EvenementSystem : MonoBehaviour
         {
             if (_roomSystem.GetRoom(i).GetHasEvent() && !_roomSystem.GetRoom(i).IsDestroy())
             {
-                totalEvents++;
+                //Debug.Log(i);
+                if (_roomSystem.GetRoom(i).GetHasEvent() && !_roomSystem.GetRoom(i).IsDestroy())
+                {
+                    totalEvents++;
+                }
             }
         }
     }
 
     void addEvents(Room room)
     {
-        AddEventTypetoRoom(room, new Evenement(EventList.EventPolice));
+        EventList eventType = EventList.Count;
+        switch (UnityEngine.Random.Range(0, (int)EventList.Count))
+        {
+            case (int)EventList.EventPolice:
+                eventType = EventList.EventPolice;
+                break;
+            case (int)EventList.EventFireFighter:
+                eventType = EventList.EventFireFighter;
+                break;
+            case (int)EventList.EventSwat:
+                eventType = EventList.EventSwat;
+                break;
+        }
+        AddEventTypetoRoom(room, new Evenement(eventType));
     }
     void AddEventTypetoRoom(Room room, Evenement evenement)
     {
