@@ -15,9 +15,8 @@ public enum EventList : int
 
 public enum EventState
 {
-    EventNotActive = 0,
-    EventActive = 1,
-    EventResolving = 2
+    EventConfining = 0,
+    EventBreach = 1
 }
 
 public class Evenement :MonoBehaviour
@@ -65,29 +64,22 @@ public class Evenement :MonoBehaviour
 
     void Update()
     {
-        //Just debug
-        if(eventState == EventState.EventNotActive)
-        {
-            Debug.Log("Error, event not active, not possible");
-            return;
-        }
-
         //Check if this room is being resolved or not
         if(unitOnSite >= numberOfUnitNeeded)
         {
-            eventState = EventState.EventResolving;
+            eventState = EventState.EventConfining;
         }
         else
         {
-            eventState = EventState.EventActive;
+            eventState = EventState.EventBreach;
         }
 
         //Increments or decrements the timer
-        if (eventState == EventState.EventActive)
+        if (eventState == EventState.EventBreach)
         {
             timer += Time.deltaTime;
         }
-        if (eventState == EventState.EventResolving)
+        if (eventState == EventState.EventConfining)
         {
             timer -= Time.deltaTime;
         }
