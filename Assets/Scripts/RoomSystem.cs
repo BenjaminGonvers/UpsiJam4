@@ -10,10 +10,14 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public int _evenement;
+    public Evenement _evenement;
 
     bool isDestroy = false;
     bool hasEvent = false;
+    
+    //Ressource
+    private RessourceSystem.ResourceType _typeResource;
+    private int _quantity;
 
     public bool GetHasEvent() { return hasEvent; }
     public bool IsDestroy() { return isDestroy; }
@@ -24,7 +28,7 @@ public class Room : MonoBehaviour
     }
 
 
-    void SetEvent(int evenement)
+    void SetEvent(Evenement evenement)
     {
         this._evenement = evenement;
         this.GetComponent<SpriteRenderer>().color = Color.red;
@@ -33,7 +37,7 @@ public class Room : MonoBehaviour
 
     void ClearEvent()
     {
-        this._evenement = -1;
+        this._evenement = null;
         this.GetComponent<SpriteRenderer>().color = Color.white;
         this.hasEvent = false;
     }
@@ -44,7 +48,15 @@ public class Room : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = Color.black;
     }
 
-}
+    public void GiveResource(RessourceSystem.ResourceType type, int quantity)
+    {
+        this._typeResource = type;
+        this._quantity = quantity;
+
+        this._evenement.AddUnitToEvent((int)_typeResource, quantity);
+    }
+
+} 
 public class RoomSystem : MonoBehaviour
 {
     List<Room> rooms;
