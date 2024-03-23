@@ -703,16 +703,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 902b89c14ca85ee4385b1b164465ab9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  difficultyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 60
+      value: 100
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 120
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   _roomSystem: {fileID: 1248815827}
   _timersList:
-  - 1
-  - 2
-  - 3
+  - 10
+  - 15
+  - 20
   maxEvenements: 2
   tickTime: 0
-  _gracePeriods: 1
-  _graceTimeModifier: 0
-  _timeTilNextEvent: 5
+  baseTimerCooldown: 0
+  curveIntensity: 0
 --- !u!4 &2112851411
 Transform:
   m_ObjectHideFlags: 0

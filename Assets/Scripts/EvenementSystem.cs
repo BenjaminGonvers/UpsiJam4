@@ -1,14 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Security.Cryptography;
 using System.Threading;
 using UnityEditor;
+using UnityEditor.UIElements;
 using UnityEngine;
 
-public class EvenementModifier
+public class EventTrigger
 {
     int every5Sec;
-
+    int maxEvents;
+    int graceTimer;
 
 
 }
@@ -71,6 +74,10 @@ public class Evenement
 
     public void EvenementUpdate()
     {
+        if (eventIsAlive == false)
+        {
+            return;
+        }
         //Check if this room is being resolved or not
         if (unitOnSite >= numberOfUnitNeeded)
         {
@@ -96,9 +103,6 @@ public class Evenement
         {
             eventIsAlive = false;
         }
-        if (eventIsAlive == false)
-        {
-        }
     }
 
 
@@ -111,6 +115,8 @@ public class Evenement
 
 public class EvenementSystem : MonoBehaviour
 {
+    [SerializeField] AnimationCurve difficultyCurve;
+    private float gameTimer = 0.0f;
     [SerializeField] private RoomSystem _roomSystem;
     [SerializeField] List<float> _timersList;
     [SerializeField] private int maxEvenements = 0;
@@ -121,26 +127,28 @@ public class EvenementSystem : MonoBehaviour
 
     Evenement _eventType1 = new Evenement(EventList.EventFireFighter);
 
-    [SerializeField] private int _gracePeriods = 0;
-    [SerializeField] private float _graceTimeModifier = 0.0f;
+    [SerializeField] float baseTimerCooldown = 0.0f;
 
-    [SerializeField] private float _timeTilNextEvent = 0.0f;
+    // Sera divisé par 100 et extrait à base timer, 100/100 = 1s, 100/50 = 2, 100/10 = 10 (Basetimer - curve value / curve intensity)
+    [SerializeField] float curveIntensity = 0.0f;
 
     void Update()
     {
-
+        gameTimer += Time.deltaTime;
         tickTimer += Time.deltaTime;
         //Activate every tick
         if (tickTimer > tickTime)
         {
+            float curveValue = difficultyCurve.Evaluate(gameTimer);
+
+            Debug.Log(curveValue);
             //If max events in game, do nothing
-            if (totalEvents < maxEvenements)
+            for (int i = 0; i < _timersList.Count; i++)
             {
-                //if room for one event, check if one timer has ran out
-                for (int i = 0; i < _timersList.Count; i++)
+                _timersList[i] -= tickTimer;
+                if (_timersList[i] <= 0)
                 {
-                    _timersList[i] -= tickTimer;
-                    if (_timersList[i] <= 0)
+                    if (totalEvents < maxEvenements)
                     {
                         Room myRoom = _roomSystem.GetRandomRoom();
                         if (!myRoom.GetHasEvent())
@@ -149,21 +157,15 @@ public class EvenementSystem : MonoBehaviour
                             addEvents(_roomSystem.GetRandomRoom());
                         }
                     }
+                    _timersList[i] = baseTimerCooldown - curveValue / curveIntensity;
                 }
-                for (int i = 0; i < _timersList.Count; i++)
-                {
-                    if (_timersList[i] <= 0)
-                    {
-                        _timersList[i] = _graceTimeModifier + _timeTilNextEvent;
-                    }
-                }
+
             }
             tickTimer = 0.0f;
         }
         totalEvents = 0;
         for (int i = 0; i < _roomSystem.RoomNumber(); i++)
         {
-            Debug.Log(i);
             if (_roomSystem.GetRoom(i).GetHasEvent() && !_roomSystem.GetRoom(i).IsDestroy())
             {
                 totalEvents++;
