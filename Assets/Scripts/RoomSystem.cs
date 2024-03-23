@@ -55,6 +55,20 @@ public class Room : MonoBehaviour
 
     public void GiveResource(RessourceSystem.ResourceType type, int quantity)
     {
+        string resourceType = "Quantity of entity of ";
+        switch (type)
+        {
+            case RessourceSystem.ResourceType.Swat:
+                resourceType += "Swat";
+                break;
+            case RessourceSystem.ResourceType.Firefighter:
+                resourceType += "Firefighter";
+                break;
+            case RessourceSystem.ResourceType.Police:
+                resourceType += "Police";
+                break;
+        }
+        Debug.Log(resourceType + " send: " + quantity);
         this._typeResource = type;
         this._quantity = quantity;
 
