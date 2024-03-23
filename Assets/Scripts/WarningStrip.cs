@@ -10,14 +10,21 @@ public class WarningStrip : MonoBehaviour
 
     public float Speed = 1.0f;
     public float TimeBetweenWarning = 20.0f;
+    
+    public List<string> WarningList = new List<string>();
 
-    // Start is called before the first frame update
-    void Start()
+    private string GetRandomWarning()
     {
-        
+        return WarningList[Random.Range(0, WarningList.Count)];
     }
 
-    // Update is called once per frame
+    public void SendWarning(string Warning)
+    {
+        TimeLastWarning = 0.0f;
+        transform.localPosition = new Vector3(0, 0, 0);
+        GetComponent<TextMeshPro>().text = Warning;
+    }
+        // Update is called once per frame
     void Update()
     {
         DeltaTime_ = Time.deltaTime;
@@ -27,7 +34,7 @@ public class WarningStrip : MonoBehaviour
         {
             TimeLastWarning = 0.0f;
             transform.localPosition = new Vector3(0, 0, 0);
-            GetComponent<TextMeshPro>().text = "Warning";
+            GetComponent<TextMeshPro>().text = GetRandomWarning();
         }
         else
         {
