@@ -29,8 +29,10 @@ public class LevelLoader : MonoBehaviour
         {
             if (_canvasPause != null)
                 Destroy(_canvasPause);
-            Destroy(GameObject.Find("GameManager"));
-            GameObject.Find("SoundManager").GetComponent<SoundManager>().PlayMusic(SoundManager.Music.MainMenu);
+            if( GameObject.Find("GameManager"))
+                Destroy(GameObject.Find("GameManager"));
+            if(GameObject.Find("SoundManager"))
+                GameObject.Find("SoundManager").GetComponent<SoundManager>().PlayMusic(SoundManager.Music.MainMenu);
         }
 
         if (sceneName == "Dylan" || sceneName == "EdouardScene" || sceneName == "BenjaminScene" || sceneName == "InGame")

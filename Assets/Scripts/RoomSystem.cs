@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
+using System.Xml.Linq;
 using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 
-public class Room
+public class Room : MonoBehaviour
 {
-    private GameObject _object;
     public int _evenement;
 
     bool isDestroy = false;
@@ -18,31 +18,30 @@ public class Room
     public bool GetHasEvent() { return hasEvent; }
     public bool IsDestroy() { return isDestroy; }
 
-    public Room(GameObject _object)
+    void Start()
     {
-        this._object = _object;
-        this._object.GetComponent<SpriteRenderer>().color = Color.white;
+        this.GetComponent<SpriteRenderer>().color = Color.white;
     }
 
 
     void SetEvent(int evenement)
     {
         this._evenement = evenement;
-        this._object.GetComponent<SpriteRenderer>().color = Color.red;
+        this.GetComponent<SpriteRenderer>().color = Color.red;
         this.hasEvent = true;
     }
 
     void ClearEvent()
     {
         this._evenement = -1;
-        this._object.GetComponent<SpriteRenderer>().color = Color.white;
+        this.GetComponent<SpriteRenderer>().color = Color.white;
         this.hasEvent = false;
     }
 
     void Destroy()
     {
         this.isDestroy = true;
-        this._object.GetComponent<SpriteRenderer>().color = Color.black;
+        this.GetComponent<SpriteRenderer>().color = Color.black;
     }
 
 }
@@ -57,7 +56,8 @@ public class RoomSystem : MonoBehaviour
 
         foreach (var item in items)
         {
-            rooms.Add(new Room(item));
+            item.AddComponent<Room>();
+            //rooms.Add(new Room(item));
         }
     }
 
