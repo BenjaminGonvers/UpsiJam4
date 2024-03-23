@@ -33,11 +33,12 @@ public class LevelLoader : MonoBehaviour
             GameObject.Find("SoundManager").GetComponent<SoundManager>().PlayMusic(SoundManager.Music.MainMenu);
         }
 
-        if (sceneName == "Dylan" || sceneName == "EdouardScene2" || sceneName == "FabianScene" || sceneName == "SceneDydou")
+        if (sceneName == "Dylan" || sceneName == "EdouardScene" || sceneName == "BenjaminScene" || sceneName == "InGame")
         {
             _canvasPause = Instantiate(_canvasPausePrefab);
             DontDestroyOnLoad(_canvasPause);
-            GameObject.Find("SoundManager").GetComponent<SoundManager>().PlayMusic(SoundManager.Music.InGame);
+             if (GameObject.Find("SoundManager"))
+                GameObject.Find("SoundManager").GetComponent<SoundManager>().PlayMusic(SoundManager.Music.InGame);
         }
 
         if (sceneName == "ScoreMenu")
