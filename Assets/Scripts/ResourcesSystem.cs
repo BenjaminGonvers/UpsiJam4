@@ -1,16 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditorInternal;
 using UnityEngine;
-
-public class RessourceContainer : MonoBehaviour
-{
-    RessourceContainer()
-    {
-        
-    }
-    ~RessourceContainer() { }
-}
-
 public class RessourceSystem : MonoBehaviour
 {
     public int RessourceSwat = 0;
@@ -23,6 +15,10 @@ public class RessourceSystem : MonoBehaviour
     private int SwatTaken = 0;
     private int PoliceTaken = 0;
     private int FirefighterTaken = 0;
+
+    public ResourceContainer SwatContainer;
+    public ResourceContainer PoliceContainer;
+    public ResourceContainer FirefighterContainer;
 
     public void AddRessourceSwat(int ressource)
     {
@@ -60,6 +56,8 @@ public class RessourceSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        SwatContainer.VisibleRessource = RessourceSwat - SwatTaken;
+        PoliceContainer.VisibleRessource = RessourcePolice - PoliceTaken;
+        FirefighterContainer.VisibleRessource = RessourceFirefighter - FirefighterTaken;
     }
 }

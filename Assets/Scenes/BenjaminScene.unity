@@ -983,6 +983,7 @@ GameObject:
   m_Component:
   - component: {fileID: 732937329}
   - component: {fileID: 732937328}
+  - component: {fileID: 732937330}
   m_Layer: 0
   m_Name: ContainerFireFighter
   m_TagString: Untagged
@@ -1051,7 +1052,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 732937327}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7.6, y: -3, z: 0}
   m_LocalScale: {x: 4.671569, y: 1.8182843, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1063,8 +1064,30 @@ Transform:
   - {fileID: 238751864}
   - {fileID: 967968218}
   - {fileID: 1633596493}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 800395736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &732937330
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 732937327}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d1af6c5e5512044943f9d99b542705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpritesList:
+  - {fileID: 1398459174}
+  - {fileID: 87350111}
+  - {fileID: 738303947}
+  - {fileID: 946450526}
+  - {fileID: 238751865}
+  - {fileID: 967968219}
+  - {fileID: 1633596494}
+  VisibleRessource: 0
+  OldVisibleRessource: 0
 --- !u!1 &738303945
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,6 +1173,62 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!1 &800395734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 800395736}
+  - component: {fileID: 800395735}
+  m_Layer: 0
+  m_Name: RessourceSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &800395735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800395734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46b534322aaf71a48b29d1c513c7c14e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RessourceSwat: 4
+  MaxRessourceSwat: 6
+  RessourcePolice: 1
+  MaxRessourcePolice: 6
+  RessourceFirefighter: 2
+  MaxRessourceFirefighter: 6
+  SwatContainer: {fileID: 1818269455}
+  PoliceContainer: {fileID: 1300395742}
+  FirefighterContainer: {fileID: 732937330}
+--- !u!4 &800395736
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800395734}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1818269454}
+  - {fileID: 1300395741}
+  - {fileID: 732937329}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &946450524
 GameObject:
   m_ObjectHideFlags: 0
@@ -1415,6 +1494,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1300395741}
   - component: {fileID: 1300395740}
+  - component: {fileID: 1300395742}
   m_Layer: 0
   m_Name: ContainerPolice
   m_TagString: Untagged
@@ -1483,7 +1563,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1300395739}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7.6, y: 0, z: 0}
   m_LocalScale: {x: 4.671569, y: 1.8182843, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1495,8 +1575,30 @@ Transform:
   - {fileID: 634817337}
   - {fileID: 110843526}
   - {fileID: 650406468}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 800395736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1300395742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1300395739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d1af6c5e5512044943f9d99b542705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpritesList:
+  - {fileID: 1756236146}
+  - {fileID: 2033242663}
+  - {fileID: 633571176}
+  - {fileID: 550532943}
+  - {fileID: 634817338}
+  - {fileID: 110843527}
+  - {fileID: 650406469}
+  VisibleRessource: 0
+  OldVisibleRessource: 0
 --- !u!1 &1398459172
 GameObject:
   m_ObjectHideFlags: 0
@@ -2000,6 +2102,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1818269454}
   - component: {fileID: 1818269453}
+  - component: {fileID: 1818269455}
   m_Layer: 0
   m_Name: ContainerSwat
   m_TagString: Untagged
@@ -2068,7 +2171,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1818269452}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7.6, y: 3, z: 0}
   m_LocalScale: {x: 4.671569, y: 1.8182843, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2080,8 +2183,30 @@ Transform:
   - {fileID: 234385922}
   - {fileID: 1915107227}
   - {fileID: 1273454904}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 800395736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1818269455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1818269452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5d1af6c5e5512044943f9d99b542705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SpritesList:
+  - {fileID: 1759792502}
+  - {fileID: 650271705}
+  - {fileID: 1704671771}
+  - {fileID: 361041737}
+  - {fileID: 234385923}
+  - {fileID: 1915107228}
+  - {fileID: 1273454905}
+  VisibleRessource: 0
+  OldVisibleRessource: 0
 --- !u!1 &1819894900
 GameObject:
   m_ObjectHideFlags: 0
@@ -2349,7 +2474,5 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1819894903}
-  - {fileID: 1818269454}
-  - {fileID: 1300395741}
-  - {fileID: 732937329}
+  - {fileID: 800395736}
   - {fileID: 1510837548}
