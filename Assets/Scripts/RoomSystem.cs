@@ -13,7 +13,7 @@ public class Room : MonoBehaviour
     public Evenement _evenement;
 
     bool isDestroy = false;
-    bool hasEvent = false;
+    public bool hasEvent = false;
     
     //Ressource
     private RessourceSystem.ResourceType _typeResource;
