@@ -13,6 +13,10 @@ public class WarningStrip : MonoBehaviour
     
     public List<string> WarningList = new List<string>();
 
+    void Start()
+    {
+        transform.position = new Vector3(9, -(float)4.5, -1);
+    }
     private string GetRandomWarning()
     {
         return WarningList[Random.Range(0, WarningList.Count)];
@@ -21,7 +25,7 @@ public class WarningStrip : MonoBehaviour
     public void SendWarning(string Warning)
     {
         TimeLastWarning = 0.0f;
-        transform.localPosition = new Vector3(0, 0, 0);
+        transform.position = new Vector3(9, -(float) 4.5, -1);
         GetComponent<TextMeshPro>().text = Warning;
     }
         // Update is called once per frame
@@ -33,7 +37,7 @@ public class WarningStrip : MonoBehaviour
         if (TimeLastWarning >= TimeBetweenWarning)
         {
             TimeLastWarning = 0.0f;
-            transform.localPosition = new Vector3(0, 0, 0);
+            transform.position = new Vector3(9, -(float) 4.5, -1);
             GetComponent<TextMeshPro>().text = GetRandomWarning();
         }
         else
