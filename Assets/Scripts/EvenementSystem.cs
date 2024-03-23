@@ -3,33 +3,22 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 
-public class Rooms
-{
-    public bool _hasEvent = false;
-    public int _eventID = 0;
-    public float _eventMaxTime = 0.0f;  
-}
 
-public class RoomSystemProto
-{
-    public Rooms getRandomRoom()
-    {
-        return null;
-    }
-}
 
 public class Evenement
 {
-    public float _eventMaxTime = 0.0f;
-    public Evenement(float eventMaxTime)
+    public int eventID = 0;
+    public float eventMaxTime = 0.0f;
+    public Evenement(int eventid, float eventnaxtime)
     {
-        _eventMaxTime = eventMaxTime;
+        eventID = eventid;
+        eventMaxTime = eventnaxtime;
     }
 }
 
 public class EvenementSystem : MonoBehaviour
 {
-    [SerializeField] private RoomSystemProto _roomSystem;
+    [SerializeField] private RoomSystem _roomSystem;
 
     [SerializeField] private int maxEvenements = 0;
     private int totalEvents = 0;
@@ -37,29 +26,34 @@ public class EvenementSystem : MonoBehaviour
     [SerializeField] private float tickTime = 0.0f;
     private float tickTimer = 0.0f;
 
-    private List<Rooms> _gameRooms;
+    private List<Room> _gameRooms;
 
     private List<float> _timers;
 
-    Evenement _eventType1 = new Evenement(1.0f);
+    Evenement _eventType1 = new Evenement(1, 1.0f);
 
 
 
     void Update()
     {
-        if (totalEvents < maxEvenements)
-        {
-            Rooms selectedRoom = _roomSystem.getRandomRoom();
-            addEvents(selectedRoom);
+        tickTimer += Time.deltaTime;
+        if(tickTimer > tickTime) 
+        { 
+            tickTimer = 0.0f;
+            if (totalEvents < maxEvenements)
+            {
+                Room selectedRoom = _roomSystem.GetRandomRoom();
+                addEvents(selectedRoom);
+            }
         }
     }
 
-    void addEvents(Rooms room)
+    void addEvents(Room room)
     {
         AddEventTypetoRoom(room, _eventType1);
     }
-    void AddEventTypetoRoom(Rooms room, Evenement evenement)
+    void AddEventTypetoRoom(Room room, Evenement evenement)
     {
-        room._eventMaxTime = evenement._eventMaxTime; 
+        room._evenement = evenement.eventID; 
     }
 }
