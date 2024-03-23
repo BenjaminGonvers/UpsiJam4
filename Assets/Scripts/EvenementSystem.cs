@@ -5,7 +5,13 @@ using System.Threading;
 using UnityEditor;
 using UnityEngine;
 
+public class EvenementModifier
+{
+    int every5Sec;
 
+
+
+}
 public enum EventList : int
 {
     EventSwat = 0,
@@ -141,7 +147,6 @@ public class EvenementSystem : MonoBehaviour
                         {
 
                             addEvents(_roomSystem.GetRandomRoom());
-                            _timersList[i] = _graceTimeModifier + _timeTilNextEvent;
                         }
                     }
                 }
@@ -149,7 +154,7 @@ public class EvenementSystem : MonoBehaviour
                 {
                     if (_timersList[i] <= 0)
                     {
-                        _timersList[i] += 10;
+                        _timersList[i] = _graceTimeModifier + _timeTilNextEvent;
                     }
                 }
             }
