@@ -33,6 +33,7 @@ public class Evenement
     public float unitOnSite = 0.0f;
 
     [SerializeField] public float badUnitModifier = 0.5f;
+
     public Evenement(EventList theirEventType)
     {
         eventType = theirEventType;
@@ -62,7 +63,7 @@ public class Evenement
         }
     }
 
-    void Update()
+    void EvenementUpdate()
     {
         //Check if this room is being resolved or not
         if(unitOnSite >= numberOfUnitNeeded)
