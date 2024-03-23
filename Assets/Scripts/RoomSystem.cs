@@ -72,7 +72,8 @@ public class Room : MonoBehaviour
         this._typeResource = type;
         this._quantity = quantity;
 
-        this._evenement.AddUnitToEvent((int)_typeResource, quantity);
+        if (this._evenement != null)
+            this._evenement.AddUnitToEvent((int)_typeResource, quantity);
     }
 
 
