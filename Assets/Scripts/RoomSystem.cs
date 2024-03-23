@@ -10,10 +10,10 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
-    public Evenement _evenement;
+    private Evenement _evenement;
 
-    bool isDestroy = false;
-    public bool hasEvent = false;
+    private bool isDestroy = false;
+    private bool hasEvent = false;
     
     //Ressource
     private RessourceSystem.ResourceType _typeResource;
@@ -25,6 +25,12 @@ public class Room : MonoBehaviour
     void Start()
     {
         this.GetComponent<SpriteRenderer>().color = Color.white;
+    }
+
+    public void SetEvenement(Evenement evenement)
+    {
+        this._evenement = evenement;
+        this.hasEvent = true;
     }
 
 
