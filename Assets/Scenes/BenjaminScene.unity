@@ -346,10 +346,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: RessourceSystem
       objectReference: {fileID: 0}
+    - target: {fileID: 4425350232655131650, guid: 3c166f30405cc2d40bf9ebac7345f81b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5872868493124619853, guid: 3c166f30405cc2d40bf9ebac7345f81b,
         type: 3}
       propertyPath: m_Mesh
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8283472413499357786, guid: 3c166f30405cc2d40bf9ebac7345f81b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8459051746593711627, guid: 3c166f30405cc2d40bf9ebac7345f81b,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
