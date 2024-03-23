@@ -163,7 +163,7 @@ public class EvenementSystem : MonoBehaviour
         totalEvents = 0;
         for (int i = 0; i < _roomSystem.RoomNumber(); i++)
         {
-            Debug.Log(i);
+            //Debug.Log(i);
             if (_roomSystem.GetRoom(i).GetHasEvent() && !_roomSystem.GetRoom(i).IsDestroy())
             {
                 totalEvents++;
