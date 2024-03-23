@@ -10,11 +10,18 @@ using UnityEngine;
 
 public class Room : MonoBehaviour
 {
+    private RoomSystem _system;
+    private GameObject _logoEvent;
     private Evenement _evenement;
 
     private bool isDestroy = false;
     private bool hasEvent = false;
-    
+
+    public void SetSystem(RoomSystem system)
+    {
+        this._system = system;
+    }
+
     //Ressource
     private RessourceSystem.ResourceType _typeResource;
     private int _quantity;
@@ -31,8 +38,9 @@ public class Room : MonoBehaviour
     {
         this._evenement = evenement;
         this.hasEvent = true;
-    }
 
+        _logoEvent = Instantiate(this._system.GetPrefabLogo(evenement.eventType), this.gameObject.transform, false);
+    }
 
     void EventBreaching()
     {
@@ -46,25 +54,20 @@ public class Room : MonoBehaviour
 
     void SetDead()
     {
+        this.isDestroy = true;
         this.GetComponent<SpriteRenderer>().color = Color.grey;
+        Destroy(_logoEvent);
+        _logoEvent = Instantiate(this._system.GetPrefabLabotaryBroken(), this.gameObject.transform, false);
     }
 
-    void SetAlive()
-    {
-        this.GetComponent<SpriteRenderer>().color = Color.white;
-    }
 
     void ClearEvent()
     {
         this._evenement = null;
         this.GetComponent<SpriteRenderer>().color = Color.white;
         this.hasEvent = false;
-    }
-
-    void Destroy()
-    {
-        this.isDestroy = true;
-        this.GetComponent<SpriteRenderer>().color = Color.black;
+        Destroy(_logoEvent);
+        _logoEvent = null;
     }
 
     public void GiveResource(RessourceSystem.ResourceType type, int quantity)
@@ -133,6 +136,11 @@ public class Room : MonoBehaviour
 } 
 public class RoomSystem : MonoBehaviour
 {
+    [SerializeField] private GameObject _prefab_logo_manifestion;
+    [SerializeField] private GameObject _prefab_logo_biological;
+    [SerializeField] private GameObject _prefab_logo_fire;
+    [SerializeField] private GameObject _prefab_logo_labotaryBroken;
+
     List<Room> rooms;
     // Start is called before the first frame update
     void Start()
@@ -142,7 +150,9 @@ public class RoomSystem : MonoBehaviour
 
         foreach (var item in items)
         {
+
             item.AddComponent<Room>();
+            item.GetComponent<Room>().SetSystem(this);
             rooms.Add(item.GetComponent<Room>());
         }
     }
@@ -179,5 +189,27 @@ public class RoomSystem : MonoBehaviour
             room = GetRandomRoom();
         }
         return room;
+    }
+
+    public GameObject GetPrefabLabotaryBroken()
+    {
+        return _prefab_logo_labotaryBroken;
+    }
+    public GameObject GetPrefabLogo(EventList eventType)
+    {
+        GameObject prefab = null;
+        switch (eventType)
+        {
+            case EventList.EventPolice:
+                prefab = _prefab_logo_manifestion;
+                break;
+            case EventList.EventSwat:
+                prefab = _prefab_logo_biological;
+                break;
+            case EventList.EventFireFighter:
+                prefab = _prefab_logo_fire;
+                break;
+        }
+        return prefab;
     }
 }
