@@ -19,6 +19,7 @@ public class RessourceSystem : MonoBehaviour
     public ResourceContainer SwatContainer;
     public ResourceContainer PoliceContainer;
     public ResourceContainer FirefighterContainer;
+    public ResourceCursor ResourceCursor;
 
     public void AddRessourceSwat(int ressource)
     {
@@ -59,6 +60,8 @@ public class RessourceSystem : MonoBehaviour
         if (SwatContainer.IsTaken && SwatTaken == 0)
         {
             SwatTaken = 1;
+            ResourceCursor.IsVisible = true;
+
         }else if(!SwatContainer.IsTaken)
         {
             SwatTaken = 0;
@@ -67,6 +70,7 @@ public class RessourceSystem : MonoBehaviour
         if (PoliceContainer.IsTaken && PoliceTaken == 0)
         {
             PoliceTaken = 1;
+            ResourceCursor.IsVisible = true;
         }else if(!PoliceContainer.IsTaken)
         {
             PoliceTaken = 0;
@@ -75,10 +79,16 @@ public class RessourceSystem : MonoBehaviour
         if (FirefighterContainer.IsTaken && FirefighterTaken == 0)
         {
             FirefighterTaken = 1;
+            ResourceCursor.IsVisible = true;
         }
         else if(!FirefighterContainer.IsTaken)
         {
             FirefighterTaken = 0;
+        }
+
+        if (PoliceTaken == 0 && SwatTaken == 0 && FirefighterTaken == 0)
+        {
+            ResourceCursor.IsVisible = false;
         }
 
         if (Input.GetMouseButtonDown(1))
