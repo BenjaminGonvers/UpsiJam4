@@ -35,7 +35,7 @@ public class RessourceSystem : MonoBehaviour
     private bool MouseRightDown = false;
     
 
-    public void AddRessourceSwat(int ressource)
+    public void AddResourceSwat(int ressource)
     {
         RessourceSwat += ressource;
         if (RessourceSwat > MaxRessourceSwat)
@@ -44,7 +44,7 @@ public class RessourceSystem : MonoBehaviour
         }
     }
 
-    public void AddRessourcePolice(int ressource)
+    public void AddResourcePolice(int ressource)
     {
         RessourcePolice += ressource;
         if (RessourcePolice > MaxRessourcePolice)
@@ -53,7 +53,7 @@ public class RessourceSystem : MonoBehaviour
         }
     }
 
-    public void AddRessourceFirefighter(int ressource)
+    public void AddResourceFirefighter(int ressource)
     {
         RessourceFirefighter += ressource;
         if (RessourceFirefighter > MaxRessourceFirefighter)
@@ -71,7 +71,40 @@ public class RessourceSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SwatContainer.IsTaken && SwatTaken == 0)
+        if (Input.GetMouseButtonUp(0))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hit.collider != null)
+            {
+                Debug.Log ("Target Position: " + hit.collider.gameObject.transform.position);
+                Room room = hit.collider.GetComponent<Room>();
+                if (room != null)
+                {
+                    Debug.Log("Room found");
+                    if (SwatTaken >0)
+                    {
+                        room.GiveResource(ResourceType.Swat, SwatTaken);
+                        RessourceSwat -= SwatTaken;
+                        SwatTaken = 0;
+                    }
+                    else if (PoliceTaken > 0)
+                    {
+                        room.GiveResource(ResourceType.Police, PoliceTaken);
+                        RessourcePolice -= PoliceTaken;
+                        PoliceTaken = 0;
+                    }
+                    else if (FirefighterTaken > 0)
+                    {
+                        room.GiveResource(ResourceType.Firefighter, FirefighterTaken);
+                        RessourceFirefighter -= FirefighterTaken;
+                        FirefighterTaken = 0;
+                    }
+                }
+            }
+            MouseRightDown = false;
+        }
+        
+        if (SwatContainer.IsTaken && SwatTaken == 0 && RessourceSwat > 0)
         {
             SwatTaken = 1;
             ResourceCursor.IsVisible = true;
@@ -81,7 +114,7 @@ public class RessourceSystem : MonoBehaviour
             SwatTaken = 0;
         }
 
-        if (PoliceContainer.IsTaken && PoliceTaken == 0)
+        if (PoliceContainer.IsTaken && PoliceTaken == 0 && RessourcePolice > 0)
         {
             PoliceTaken = 1;
             ResourceCursor.IsVisible = true;
@@ -90,7 +123,7 @@ public class RessourceSystem : MonoBehaviour
             PoliceTaken = 0;
         }
 
-        if (FirefighterContainer.IsTaken && FirefighterTaken == 0)
+        if (FirefighterContainer.IsTaken && FirefighterTaken == 0 && RessourceFirefighter > 0)
         {
             FirefighterTaken = 1;
             ResourceCursor.IsVisible = true;
@@ -121,26 +154,6 @@ public class RessourceSystem : MonoBehaviour
             {
                 FirefighterTaken ++;
             }
-        }
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            MouseRightDown = true;
-        }else if (MouseRightDown)
-        {
-            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-            if (hit.collider != null)
-            {
-                Room room = hit.collider.GetComponent<Room>();
-                if (room != null)
-                {
-                    room.AddRessource(VisibleRessource);
-                }
-            }
-            MouseRightDown = false;
-        }else
-        {
-           
         }
 
         SwatContainer.VisibleRessource = RessourceSwat - SwatTaken;
