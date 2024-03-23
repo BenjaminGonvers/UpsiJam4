@@ -12,9 +12,9 @@ public class RessourceSystem : MonoBehaviour
     public int RessourceFirefighter = 0;
     public int MaxRessourceFirefighter = 0;
 
-    private int SwatTaken = 0;
-    private int PoliceTaken = 0;
-    private int FirefighterTaken = 0;
+    public int SwatTaken = 0;
+    public int PoliceTaken = 0;
+    public int FirefighterTaken = 0;
 
     public ResourceContainer SwatContainer;
     public ResourceContainer PoliceContainer;
@@ -56,6 +56,51 @@ public class RessourceSystem : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (SwatContainer.IsTaken && SwatTaken == 0)
+        {
+            SwatTaken = 1;
+        }else if(!SwatContainer.IsTaken)
+        {
+            SwatTaken = 0;
+        }
+
+        if (PoliceContainer.IsTaken && PoliceTaken == 0)
+        {
+            PoliceTaken = 1;
+        }else if(!PoliceContainer.IsTaken)
+        {
+            PoliceTaken = 0;
+        }
+
+        if (FirefighterContainer.IsTaken && FirefighterTaken == 0)
+        {
+            FirefighterTaken = 1;
+        }
+        else if(!FirefighterContainer.IsTaken)
+        {
+            FirefighterTaken = 0;
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (SwatTaken > 0 && SwatTaken < RessourceSwat)
+            {
+                SwatTaken ++;
+            }
+
+            if (PoliceTaken > 0 && PoliceTaken < RessourcePolice)
+            {
+                PoliceTaken ++;
+            }
+
+            if (FirefighterTaken > 0 && FirefighterTaken < RessourceFirefighter)
+            {
+                FirefighterTaken ++;
+            }
+        }
+
+        
+
         SwatContainer.VisibleRessource = RessourceSwat - SwatTaken;
         PoliceContainer.VisibleRessource = RessourcePolice - PoliceTaken;
         FirefighterContainer.VisibleRessource = RessourceFirefighter - FirefighterTaken;

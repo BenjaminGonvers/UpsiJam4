@@ -8,19 +8,21 @@ public class ResourceContainer : MonoBehaviour
     public int VisibleRessource = 0;
     public int OldVisibleRessource = 0;
 
+    public bool IsTaken = false;
+
     void OnMouseDown()
     {
-        Debug.Log("Sprite Clicked");
+        IsTaken = true;
     }
 
     void OnMouseDrag()
     {
-        Debug.Log("Sprite Dragged");
+       
     }
 
     void OnMouseUp()
     {
-        Debug.Log("Sprite Released");
+        IsTaken = false;
     }
     // Update is called once per frame
     void Update()
