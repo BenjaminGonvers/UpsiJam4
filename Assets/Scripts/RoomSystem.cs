@@ -10,7 +10,7 @@ using UnityEngine;
 public class Room
 {
     private GameObject _object;
-    private int _evenement;
+    public int _evenement;
 
     bool isDestroy = false;
     bool hasEvent = false;
