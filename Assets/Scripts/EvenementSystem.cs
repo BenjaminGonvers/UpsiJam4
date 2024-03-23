@@ -16,7 +16,8 @@ public enum EventList : int
 {
     EventSwat = 0,
     EventPolice = 1,
-    EventFireFighter = 2
+    EventFireFighter = 2,
+    Count = 3
 }
 
 public enum EventState
@@ -173,7 +174,20 @@ public class EvenementSystem : MonoBehaviour
 
     void addEvents(Room room)
     {
-        AddEventTypetoRoom(room, new Evenement(EventList.EventPolice));
+        EventList eventType = EventList.Count;
+        switch (UnityEngine.Random.Range(0, (int)EventList.Count))
+        {
+            case (int)EventList.EventPolice:
+                eventType = EventList.EventPolice;
+                break;
+            case (int)EventList.EventFireFighter:
+                eventType = EventList.EventFireFighter;
+                break;
+            case (int)EventList.EventSwat:
+                eventType = EventList.EventSwat;
+                break;
+        }
+        AddEventTypetoRoom(room, new Evenement(eventType));
     }
     void AddEventTypetoRoom(Room room, Evenement evenement)
     {
