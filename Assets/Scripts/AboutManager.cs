@@ -8,5 +8,6 @@ public class AboutManager : MonoBehaviour
     public void LoadScene(string name)
     {
         GameObject.Find("SceneSystem").GetComponent<LevelLoader>().LoadScene(name);
+        Destroy(GameObject.Find("SceneSystem"));
     }
 }

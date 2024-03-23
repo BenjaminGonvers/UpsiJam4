@@ -6,7 +6,6 @@ public class PauseSystem : MonoBehaviour
 {
     [SerializeField] private GameObject _canvas;
 
-
     public void Return()
     {
         _canvas.GetComponent<Canvas>().enabled = false;
@@ -15,8 +14,10 @@ public class PauseSystem : MonoBehaviour
     public void MainMenu()
     {
         GameObject.Find("SceneSystem").GetComponent<LevelLoader>().LoadScene("MainMenu");
+        Destroy(this.gameObject);
+        Destroy(GameObject.Find("SceneSystem"));
     }
-    private void FixedUpdate()
+    private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -24,7 +25,7 @@ public class PauseSystem : MonoBehaviour
             //Set GameManager in Pause
 
             _canvas.GetComponent<Canvas>().enabled = !_canvas.GetComponent<Canvas>().enabled;
-
+            
         }
     }
 }
