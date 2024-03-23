@@ -22,7 +22,7 @@ public enum EventState
 
 public class Evenement :MonoBehaviour
 {
-    public bool eventIsAlive;
+    public bool eventIsAlive = true;
     public EventList eventType = 0;
     public EventState eventState = 0;
 
@@ -95,10 +95,12 @@ public class Evenement :MonoBehaviour
         //Check if event got resolved or breached containment
         if(timer <= 0 || timer >= eventMaxTime)
         {
-            eventIsAlive = true;
+            eventIsAlive = false;
         }
     }
 
+
+    public bool IsAlive() { return eventIsAlive; }
     public EventState GetEventState() { return eventState; }
     public float GetEventMaxTime() {  return eventMaxTime; }
     public float GetEventActualTimer() { return timer; }
