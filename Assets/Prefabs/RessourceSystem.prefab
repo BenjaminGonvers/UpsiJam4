@@ -1672,11 +1672,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 46b534322aaf71a48b29d1c513c7c14e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RessourceSwat: 4
+  RessourceSwat: 0
   MaxRessourceSwat: 6
-  RessourcePolice: 1
+  RessourcePolice: 0
   MaxRessourcePolice: 6
-  RessourceFirefighter: 2
+  RessourceFirefighter: 0
   MaxRessourceFirefighter: 6
   SwatTaken: 0
   PoliceTaken: 0
