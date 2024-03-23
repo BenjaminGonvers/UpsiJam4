@@ -962,17 +962,11 @@ MonoBehaviour:
   - 1
   - 2
   - 3
-  - 4
-  - 5
-  - 6
-  - 7
-  - 8
-  - 9
-  maxEvenements: 3
+  maxEvenements: 2
   tickTime: 0
-  _gracePeriods: 0
+  _gracePeriods: 1
   _graceTimeModifier: 0
-  _timeTilNextEvent: 0
+  _timeTilNextEvent: 5
 --- !u!4 &2112851411
 Transform:
   m_ObjectHideFlags: 0
