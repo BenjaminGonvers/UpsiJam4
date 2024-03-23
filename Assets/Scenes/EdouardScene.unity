@@ -963,7 +963,12 @@ MonoBehaviour:
   - 2
   - 3
   - 4
-  maxEvenements: 6
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  maxEvenements: 3
   tickTime: 0
   _gracePeriods: 0
   _graceTimeModifier: 0

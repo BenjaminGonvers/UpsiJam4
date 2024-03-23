@@ -113,10 +113,10 @@ public class Room : MonoBehaviour
                 switch (_evenement.GetEventState())
                 {
                     case EventState.EventConfining:
-                        this.SetAlive();
+                        this.ClearEvent();
                         break;
                     case EventState.EventBreach:
-                        this.SetDead();
+                        this.Destroy();
                         break;
                 }
             }
@@ -145,6 +145,11 @@ public class RoomSystem : MonoBehaviour
             item.AddComponent<Room>();
             rooms.Add(item.GetComponent<Room>());
         }
+    }
+
+    public int RoomNumber()
+    {
+        return rooms.Count();
     }
 
     // Update is called once per frame

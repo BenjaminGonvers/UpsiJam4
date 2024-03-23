@@ -43,7 +43,7 @@ public class Evenement
         }
         if (theirEventType == EventList.EventPolice)
         {
-            eventMaxTime = 20.0f;
+            eventMaxTime = 5.0f;
         }
         if (theirEventType == EventList.EventFireFighter)
         {
@@ -122,7 +122,6 @@ public class EvenementSystem : MonoBehaviour
 
     void Update()
     {
-        Debug.Log(totalEvents);
 
         tickTimer += Time.deltaTime;
         //Activate every tick
@@ -138,7 +137,7 @@ public class EvenementSystem : MonoBehaviour
                     if (_timersList[i] <= 0)
                     {
                         Room myRoom = _roomSystem.GetRandomRoom();
-                        if (myRoom.GetHasEvent() == false)
+                        if (!myRoom.GetHasEvent())
                         {
 
                             addEvents(_roomSystem.GetRandomRoom());
@@ -150,25 +149,21 @@ public class EvenementSystem : MonoBehaviour
                 {
                     if (_timersList[i] <= 0)
                     {
-                        _timersList[i] += 50;
+                        _timersList[i] += 10;
                     }
                 }
             }
-            //totalEvents = 0;
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    if (_roomSystem.GetRoom(i).GetHasEvent())
-            //    {
-            //        totalEvents++;
-            //    }
-            //}
             tickTimer = 0.0f;
         }
-    }
-
-    void DeleteEvent()
-    {
-        totalEvents--;
+        totalEvents = 0;
+        for (int i = 0; i < _roomSystem.RoomNumber(); i++)
+        {
+            Debug.Log(i);
+            if (_roomSystem.GetRoom(i).GetHasEvent() && !_roomSystem.GetRoom(i).IsDestroy())
+            {
+                totalEvents++;
+            }
+        }
     }
 
     void addEvents(Room room)
