@@ -29,7 +29,7 @@ public class Evenement
     public float eventMaxTime = 0.0f;
     private float timer = 0.0f;
 
-    public float numberOfUnitNeeded = 0.0f;
+    public float numberOfUnitNeeded = 2.0f;
     public float unitOnSite = 0.0f;
 
     [SerializeField] public float badUnitModifier = 0.5f;
@@ -39,15 +39,15 @@ public class Evenement
         eventType = theirEventType;
         if (theirEventType == EventList.EventSwat)
         {
-            eventMaxTime = 1.0f;
+            eventMaxTime = 10.0f;
         }
         if (theirEventType == EventList.EventPolice)
         {
-            eventMaxTime = 2.0f;
+            eventMaxTime = 20.0f;
         }
         if (theirEventType == EventList.EventFireFighter)
         {
-            eventMaxTime = 3.0f;
+            eventMaxTime = 30.0f;
         }
     }
 
