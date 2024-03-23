@@ -95,6 +95,14 @@ public class Room : MonoBehaviour
             }
         }
     }
+
+    private void FixedUpdate()
+    {
+        if (this._evenement != null)
+        {
+            this._evenement.EvenementUpdate();
+        }
+    }
 } 
 public class RoomSystem : MonoBehaviour
 {
