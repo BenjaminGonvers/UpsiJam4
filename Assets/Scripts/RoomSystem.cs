@@ -135,7 +135,7 @@ public class RoomSystem : MonoBehaviour
             roomsTmp.Remove(room);
             room = GetRandomRoom(rooms);
         }
-        return this.rooms.First();
+        return room;
     }
 
     private Room GetRandomRoom(List<Room> rooms)
@@ -146,6 +146,6 @@ public class RoomSystem : MonoBehaviour
             rooms.Remove(room);
             room = GetRandomRoom();
         }
-        return this.rooms.First();
+        return room;
     }
 }
