@@ -3,8 +3,19 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
+using UnityEngine.UI;
+
 public class RessourceSystem : MonoBehaviour
 {
+
+
+    public enum ResourceType
+    {
+        Swat,
+        Police,
+        Firefighter
+    }
+
     public int RessourceSwat = 0;
     public int MaxRessourceSwat = 0;
     public int RessourcePolice = 0;
@@ -20,6 +31,9 @@ public class RessourceSystem : MonoBehaviour
     public ResourceContainer PoliceContainer;
     public ResourceContainer FirefighterContainer;
     public ResourceCursor ResourceCursor;
+
+    private bool MouseRightDown = false;
+    
 
     public void AddRessourceSwat(int ressource)
     {
@@ -109,7 +123,25 @@ public class RessourceSystem : MonoBehaviour
             }
         }
 
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            MouseRightDown = true;
+        }else if (MouseRightDown)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hit.collider != null)
+            {
+                Room room = hit.collider.GetComponent<Room>();
+                if (room != null)
+                {
+                    room.AddRessource(VisibleRessource);
+                }
+            }
+            MouseRightDown = false;
+        }else
+        {
+           
+        }
 
         SwatContainer.VisibleRessource = RessourceSwat - SwatTaken;
         PoliceContainer.VisibleRessource = RessourcePolice - PoliceTaken;

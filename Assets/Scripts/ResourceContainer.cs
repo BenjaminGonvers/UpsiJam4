@@ -7,6 +7,7 @@ public class ResourceContainer : MonoBehaviour
     public List<SpriteRenderer> SpritesList;
     public int VisibleRessource = 0;
     public int OldVisibleRessource = 0;
+    
 
     public bool IsTaken = false;
 
@@ -22,6 +23,7 @@ public class ResourceContainer : MonoBehaviour
 
     void OnMouseUp()
     {
+
         IsTaken = false;
     }
     // Update is called once per frame
