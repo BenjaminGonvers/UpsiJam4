@@ -20,7 +20,7 @@ public enum EventState
     EventResolving = 2
 }
 
-public class Evenement
+public class Evenement :MonoBehaviour
 {
     public bool eventIsAlive;
     public EventList eventType = 0;
