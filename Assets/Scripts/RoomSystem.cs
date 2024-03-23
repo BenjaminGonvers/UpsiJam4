@@ -119,7 +119,7 @@ public class Room : MonoBehaviour
                         this.ClearEvent();
                         break;
                     case EventState.EventBreach:
-                        this.Destroy();
+                        this.SetDead();
                         break;
                 }
             }
