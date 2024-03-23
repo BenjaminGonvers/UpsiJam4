@@ -23,10 +23,10 @@ public class Evenement
 {
     public bool eventIsAlive = true;
     public EventList eventType = 0;
-    public EventState eventState = 0;
+    public EventState eventState = EventState.EventBreach;
 
 
-    public float eventMaxTime = 0.0f;
+    public float eventMaxTime = 100.0f;
     private float timer = 0.0f;
 
     public float numberOfUnitNeeded = 2.0f;
@@ -39,7 +39,7 @@ public class Evenement
         eventType = theirEventType;
         if (theirEventType == EventList.EventSwat)
         {
-            eventMaxTime = 10.0f;
+            eventMaxTime = 5.0f;
         }
         if (theirEventType == EventList.EventPolice)
         {
@@ -53,7 +53,7 @@ public class Evenement
 
     public void AddUnitToEvent(int unitType, int UnitNumber)
     {
-        if(unitType == (int)eventType) 
+        if (unitType == (int)eventType)
         {
             unitOnSite += UnitNumber;
         }
@@ -66,7 +66,7 @@ public class Evenement
     public void EvenementUpdate()
     {
         //Check if this room is being resolved or not
-        if(unitOnSite >= numberOfUnitNeeded)
+        if (unitOnSite >= numberOfUnitNeeded)
         {
             eventState = EventState.EventConfining;
         }
@@ -86,16 +86,19 @@ public class Evenement
         }
 
         //Check if event got resolved or breached containment
-        if(timer <= 0 || timer >= eventMaxTime)
+        if (timer < 0 || timer > eventMaxTime)
         {
             eventIsAlive = false;
+        }
+        if (eventIsAlive == false)
+        {
         }
     }
 
 
     public bool IsAlive() { return eventIsAlive; }
     public EventState GetEventState() { return eventState; }
-    public float GetEventMaxTime() {  return eventMaxTime; }
+    public float GetEventMaxTime() { return eventMaxTime; }
     public float GetEventActualTimer() { return timer; }
 
 }
@@ -119,29 +122,53 @@ public class EvenementSystem : MonoBehaviour
 
     void Update()
     {
+        Debug.Log(totalEvents);
 
         tickTimer += Time.deltaTime;
         //Activate every tick
         if (tickTimer > tickTime)
         {
-            tickTimer = 0.0f;
             //If max events in game, do nothing
             if (totalEvents < maxEvenements)
             {
                 //if room for one event, check if one timer has ran out
                 for (int i = 0; i < _timersList.Count; i++)
                 {
-                    _timersList[i] -= Time.deltaTime;
-                    if (_timersList[i] < 0)
+                    _timersList[i] -= tickTimer;
+                    if (_timersList[i] <= 0)
                     {
-                        _timersList[i] = 2;
-                        Debug.Log("ooo");
-                        addEvents(_roomSystem.GetRandomRoom());
-                        _timersList[i] = _graceTimeModifier + _timeTilNextEvent;
+                        Room myRoom = _roomSystem.GetRandomRoom();
+                        if (myRoom.GetHasEvent() == false)
+                        {
+
+                            addEvents(_roomSystem.GetRandomRoom());
+                            _timersList[i] = _graceTimeModifier + _timeTilNextEvent;
+                        }
+                    }
+                }
+                for (int i = 0; i < _timersList.Count; i++)
+                {
+                    if (_timersList[i] <= 0)
+                    {
+                        _timersList[i] += 50;
                     }
                 }
             }
+            //totalEvents = 0;
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    if (_roomSystem.GetRoom(i).GetHasEvent())
+            //    {
+            //        totalEvents++;
+            //    }
+            //}
+            tickTimer = 0.0f;
         }
+    }
+
+    void DeleteEvent()
+    {
+        totalEvents--;
     }
 
     void addEvents(Room room)
@@ -150,6 +177,6 @@ public class EvenementSystem : MonoBehaviour
     }
     void AddEventTypetoRoom(Room room, Evenement evenement)
     {
-        room._evenement = evenement;
+        room.SetEvenement(evenement);
     }
 }
