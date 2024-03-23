@@ -19,7 +19,7 @@ public enum EventState
     EventBreach = 1
 }
 
-public class Evenement :MonoBehaviour
+public class Evenement
 {
     public bool eventIsAlive = true;
     public EventList eventType = 0;
@@ -102,7 +102,7 @@ public class Evenement :MonoBehaviour
 public class EvenementSystem : MonoBehaviour
 {
     [SerializeField] private RoomSystem _roomSystem;
-§
+    [SerializeField] List<float> _timersList;
     [SerializeField] private int maxEvenements = 0;
     private int totalEvents = 0;
 
@@ -110,8 +110,6 @@ public class EvenementSystem : MonoBehaviour
     private float tickTimer = 0.0f;
 
     Evenement _eventType1 = new Evenement(EventList.EventFireFighter);
-
-    private List<float> _timersList = new();
 
     [SerializeField] private int _gracePeriods = 0;
     [SerializeField] private float _graceTimeModifier = 0.0f;
@@ -132,10 +130,12 @@ public class EvenementSystem : MonoBehaviour
                 //if room for one event, check if one timer has ran out
                 for (int i = 0; i < _timersList.Count; i++)
                 {
+                    _timersList[i] -= Time.deltaTime;
                     if (_timersList[i] < 0)
                     {
-                        Room selectedRoom = _roomSystem.GetRandomRoom();
-                        addEvents(selectedRoom);
+                        _timersList[i] = 2;
+                        Debug.Log("ooo");
+                        addEvents(_roomSystem.GetRandomRoom());
                         _timersList[i] = _graceTimeModifier + _timeTilNextEvent;
                     }
                 }
@@ -149,6 +149,6 @@ public class EvenementSystem : MonoBehaviour
     }
     void AddEventTypetoRoom(Room room, Evenement evenement)
     {
-        //TODO
+        room._evenement = evenement;
     }
 }

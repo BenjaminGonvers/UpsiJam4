@@ -121,7 +121,7 @@ public class RoomSystem : MonoBehaviour
     public Room GetRandomRoom()
     {
         List<Room> roomsTmp = rooms;
-        Room room = this.rooms[UnityEngine.Random.Range(0, rooms.Count)];
+        Room room = this.rooms[UnityEngine.Random.Range(0, rooms.Count-1)];
         if (room.GetHasEvent())
         {
             roomsTmp.Remove(room);
@@ -132,7 +132,7 @@ public class RoomSystem : MonoBehaviour
 
     private Room GetRandomRoom(List<Room> rooms)
     {
-        Room room = this.rooms[UnityEngine.Random.Range(0, rooms.Count)];
+        Room room = this.rooms[UnityEngine.Random.Range(0, rooms.Count-1)];
         if (room.GetHasEvent())
         {
             rooms.Remove(room);
