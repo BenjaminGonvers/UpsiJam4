@@ -79,16 +79,19 @@ public class Room : MonoBehaviour
 
     void Update()
     {
-        if (_evenement.eventIsAlive)
+        if (this._evenement != null)
         {
-            switch (_evenement.GetEventState())
+            if (_evenement.eventIsAlive)
             {
-                case EventState.EventConfining:
-                    this.SetConfining();
-                    break;
-                case EventState.EventBreach:
-                    this.Destroy();
-                    break;
+                switch (_evenement.GetEventState())
+                {
+                    case EventState.EventConfining:
+                        this.SetConfining();
+                        break;
+                    case EventState.EventBreach:
+                        this.Destroy();
+                        break;
+                }
             }
         }
     }
