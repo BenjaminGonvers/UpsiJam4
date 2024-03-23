@@ -99,7 +99,7 @@ public class Evenement :MonoBehaviour
         }
     }
 
-
+    public EventState GetEventState() { return eventState; }
     public float GetEventMaxTime() {  return eventMaxTime; }
     public float GetEventActualTimer() { return timer; }
 
