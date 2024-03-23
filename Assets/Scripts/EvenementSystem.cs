@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using System.Threading;
 using UnityEngine;
 
 
@@ -33,20 +34,29 @@ public class EvenementSystem : MonoBehaviour
     [SerializeField] private int _gracePeriods = 0;
     [SerializeField] private float _graceTimeModifier = 0.0f;
 
-    private float _timeTilNextEvent = 0.0f;
+    [SerializeField] private float _timeTilNextEvent = 0.0f;
 
     void Update()
     {
         
         tickTimer += Time.deltaTime;
+        //Activate every tick
         if(tickTimer > tickTime) 
         { 
             tickTimer = 0.0f;
+            //If max events in game, do nothing
             if (totalEvents < maxEvenements)
             {
-                // TODO ALGORYTHM TO RANDOMIZE if event spawns
-                Room selectedRoom = _roomSystem.GetRandomRoom();
-                addEvents(selectedRoom);
+                //if room for one event, check if one timer has ran out
+                for (int i = 0 ; i < _timersList.Count; i++)
+                {
+                    if(_timersList[i] < 0)
+                    {
+                        Room selectedRoom = _roomSystem.GetRandomRoom();
+                        addEvents(selectedRoom);
+                        _timersList[i] = _graceTimeModifier + _timeTilNextEvent;
+                    }
+                }
             }
         }
     }
