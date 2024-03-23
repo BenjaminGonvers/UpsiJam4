@@ -63,7 +63,7 @@ public class Evenement
         }
     }
 
-    void EvenementUpdate()
+    public void EvenementUpdate()
     {
         //Check if this room is being resolved or not
         if(unitOnSite >= numberOfUnitNeeded)
