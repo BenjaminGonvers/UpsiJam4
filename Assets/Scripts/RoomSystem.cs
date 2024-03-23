@@ -28,11 +28,9 @@ public class Room : MonoBehaviour
     }
 
 
-    void SetEvent(Evenement evenement)
+    void RoomBreaching()
     {
-        this._evenement = evenement;
         this.GetComponent<SpriteRenderer>().color = Color.red;
-        this.hasEvent = true;
     }
 
     void SetConfining()
@@ -89,7 +87,7 @@ public class Room : MonoBehaviour
                         this.SetConfining();
                         break;
                     case EventState.EventBreach:
-                        this.Destroy();
+                        this.RoomBreaching();
                         break;
                 }
             }
