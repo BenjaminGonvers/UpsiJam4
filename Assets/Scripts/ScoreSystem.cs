@@ -20,7 +20,7 @@ public class ScoreSystem : MonoBehaviour
     bool isCalculate = false;
     bool inAnimation = false;
     public bool hasResult = false;
-    private bool _gameOver = false;
+    public bool _gameOver = false;
 
     public GameObject GameOverCanvas;
     public GameObject GameOverScoreText;
@@ -108,7 +108,7 @@ public class ScoreSystem : MonoBehaviour
     private void GameOver()
     {
         GameOverCanvas.GetComponent<Canvas>().enabled = true;
-        GameOverScoreText.GetComponent<TextMeshProUGUI>().text = "Score : " + score;
-        Debug.Log("Game Over");
+        GameOverScoreText.GetComponent<TextMeshProUGUI>().text = "Score : " + score.ToString();
+        Debug.Log("Game Over with a score of " + score.ToString());
     }
 }

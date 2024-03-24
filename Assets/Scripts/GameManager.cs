@@ -92,7 +92,7 @@ public class GameManager : MonoBehaviour
                         _isCalculate = true;
                     }
 
-                    if (_score.hasResult)
+                    if (_score.hasResult && !_score._gameOver)
                     {
                         _market.ShowMarket();
                     }
