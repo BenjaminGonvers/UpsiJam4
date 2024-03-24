@@ -56,6 +56,7 @@ public class GameManager : MonoBehaviour
         _isCalculate = false;
         isFinish = false;
         _market.HideMarket();
+        _evenementSystem.AddNewTimer();
     }
     // Update is called once per frame
     void Update()
@@ -97,7 +98,6 @@ public class GameManager : MonoBehaviour
                         _market.ShowMarket();
                     }
 
-                    _evenementSystem.AddNewTimer();
                 }
                 
             }
