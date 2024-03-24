@@ -794,13 +794,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 283a5a302727d164aa8940d40d1f5ad2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SwatQuantity: 2
-  PoliceQuantity: 2
-  FirefighterQuantity: 2
-  SwatPrice: 20
-  PolicePrice: 20
-  FirefighterPrice: 20
-  Credit: 50
+  SwatPrice: 300
+  PolicePrice: 300
+  FirefighterPrice: 300
 --- !u!1 &3384131177115222565
 GameObject:
   m_ObjectHideFlags: 0
