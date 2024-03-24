@@ -30,7 +30,11 @@ public class ScoreSystem : MonoBehaviour
         isCalculate = true;
         _roomsAlive = _roomSystem.GetListRoomIsAlive();
         inAnimation = false;
-        _gameOver = true;
+        if (_roomsAlive.Count <= 5)
+        {
+            _gameOver = true;
+        }
+        
     }
     // Start is called before the first frame update
     void Start()
