@@ -142,48 +142,51 @@ public class EvenementSystem : MonoBehaviour
 
     void Update()
     {
-        gameTimer += Time.deltaTime;
-        tickTimer += Time.deltaTime;
-        //Activate every tick
-        if (tickTimer > tickTime)
+        if (!_gameManager.GetPause())
         {
-            float curveValue = difficultyCurve.Evaluate(gameTimer);
-
-            //Debug.Log(curveValue);
-            //If max events in game, do nothing
-            for (int i = 0; i < _timersList.Count; i++)
+            gameTimer += Time.deltaTime;
+            tickTimer += Time.deltaTime;
+            //Activate every tick
+            if (tickTimer > tickTime)
             {
-                _timersList[i] -= tickTimer;
-                if (_timersList[i] <= 0)
-                {
-                    if (totalEvents < maxEvenements)
-                    {
-                        _timersList[i] -= tickTimer;
-                        if (_timersList[i] <= 0)
-                        {
-                            Room myRoom = _roomSystem.GetRandomRoom();
-                            if (!myRoom.GetHasEvent())
-                            {
+                float curveValue = difficultyCurve.Evaluate(gameTimer);
 
-                                addEvents(_roomSystem.GetRandomRoom());
+                //Debug.Log(curveValue);
+                //If max events in game, do nothing
+                for (int i = 0; i < _timersList.Count; i++)
+                {
+                    _timersList[i] -= tickTimer;
+                    if (_timersList[i] <= 0)
+                    {
+                        if (totalEvents < maxEvenements)
+                        {
+                            _timersList[i] -= tickTimer;
+                            if (_timersList[i] <= 0)
+                            {
+                                Room myRoom = _roomSystem.GetRandomRoom();
+                                if (!myRoom.GetHasEvent())
+                                {
+
+                                    addEvents(_roomSystem.GetRandomRoom());
+                                }
                             }
                         }
+                        _timersList[i] = baseTimerCooldown - curveValue / curveIntensity;
                     }
-                    _timersList[i] = baseTimerCooldown - curveValue / curveIntensity;
-                }
 
+                }
+                tickTimer = 0.0f;
             }
-            tickTimer = 0.0f;
-        }
-        totalEvents = 0;
-        for (int i = 0; i < _roomSystem.RoomNumber(); i++)
-        {
-            if (_roomSystem.GetRoom(i).GetHasEvent() && !_roomSystem.GetRoom(i).IsDestroy())
+            totalEvents = 0;
+            for (int i = 0; i < _roomSystem.RoomNumber(); i++)
             {
-                //Debug.Log(i);
                 if (_roomSystem.GetRoom(i).GetHasEvent() && !_roomSystem.GetRoom(i).IsDestroy())
                 {
-                    totalEvents++;
+                    //Debug.Log(i);
+                    if (_roomSystem.GetRoom(i).GetHasEvent() && !_roomSystem.GetRoom(i).IsDestroy())
+                    {
+                        totalEvents++;
+                    }
                 }
             }
         }

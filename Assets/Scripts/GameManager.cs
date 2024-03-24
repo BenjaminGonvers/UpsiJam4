@@ -9,23 +9,32 @@ public class GameManager : MonoBehaviour
 
     int number_day = 0;
 
-    const float TIME_FOR_ONE_DAY = 30.0f;
+    const float TURN_TIME = 30.0f;
     float counterTime = 0.0f;
 
     bool isPause = false;
+    bool isFinish = false;
+
+    private RoomSystem _roomSystem;
     public bool GetPause()
     {
         return isPause;
     }
+
+    public bool GetFinish()
+    {
+        return isFinish;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        newDay();
+        _roomSystem = GameObject.Find("RoomSystem").GetComponent<RoomSystem>();
+        nextTurn();
     }
 
-    void newDay()
+    void nextTurn()
     {
-        counterTime = TIME_FOR_ONE_DAY;
+        counterTime = TURN_TIME;
     }
     // Update is called once per frame
     void Update()
@@ -37,11 +46,18 @@ public class GameManager : MonoBehaviour
     {
         if (!isPause)
         {
-            counterTime -= Time.deltaTime;
-            if(counterTime <= 0.0f)
+            if (!isFinish)
             {
-                // End Day
-                isPause = true;
+                counterTime -= Time.deltaTime;
+                if (counterTime <= 0.0f)
+                {
+                    // End Turn
+                    isFinish = true;
+                }
+            }
+            else
+            {
+
             }
         }
     }

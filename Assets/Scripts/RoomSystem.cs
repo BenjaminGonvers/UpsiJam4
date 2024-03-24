@@ -64,7 +64,7 @@ public class Room : MonoBehaviour
 
     void EventConfining()
     {
-        this.GetComponent<SpriteRenderer>().color = Color.yellow;
+        this.GetComponent<SpriteRenderer>().color = Color.green;
     }
 
     void SetDead()
@@ -170,9 +170,20 @@ public class Room : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (this._evenement != null)
+        if (!_system.GetPause())
         {
+<<<<<<< HEAD
             this._evenement.EvenementUpdate();
+=======
+            if (this._evenement != null)
+            {
+                this._evenement.EvenementUpdate();
+
+                float time = this._evenement.GetEventActualTimer() / this._evenement.GetEventMaxTime();
+                if (_bars != null)
+                    _bars.SetBar(this._id, time);
+            }
+>>>>>>> eafa25a43ba65a8136f10c5742c6b38cd673f855
         }
     }
 
@@ -257,9 +268,11 @@ public class RoomSystem : MonoBehaviour
     List<Room> rooms;
 
     private RessourceSystem _resourceSystem;
+    private GameManager _gameManager;
     // Start is called before the first frame update
     void Start()
     {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _resourceSystem = GameObject.Find("RessourceSystem").GetComponent<RessourceSystem>();
         rooms = new List<Room>();
         GameObject[] items = GameObject.FindGameObjectsWithTag("Room");
@@ -271,6 +284,10 @@ public class RoomSystem : MonoBehaviour
             items[i].GetComponent<Room>().SetID(rooms.Count);
             rooms.Add(items[i].GetComponent<Room>());
         }
+    }
+
+    public bool GetPause() {
+        return _gameManager.GetPause();    
     }
 
     public RessourceSystem GetResourceSystem()
@@ -332,5 +349,20 @@ public class RoomSystem : MonoBehaviour
                 break;
         }
         return prefab;
+    }
+
+    public bool AllIsFinish()
+    {
+        bool isFinish = true;
+        foreach (Room room in this.rooms)
+        {
+            if (room.GetHasEvent())
+            {
+                isFinish = false;
+            }
+        }
+
+        return isFinish;
+
     }
 }
