@@ -1,24 +1,31 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class MarketSystem : MonoBehaviour
 {
-    public int SwatPrice = 20;
-    public int PolicePrice = 20;
-    public int FirefighterPrice = 20;
+    public int SwatPrice = 300;
+    public int PolicePrice = 300;
+    public int FirefighterPrice = 300;
 
     private ScoreSystem _score;
     private RessourceSystem _resource;
+    private GameManager _gameManager;
+
+    [SerializeField] private GameObject _textCredit;
+
+
 
     private void Start()
     {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _resource = GameObject.Find("RessourceSystem").GetComponent<RessourceSystem>();
     }
 
     private void Update()
     {
-        if(_score == null)
+        if (_score == null)
             _score = GameObject.Find("ScoreSystem(Clone)").GetComponent<ScoreSystem>();
     }
 
@@ -113,5 +120,28 @@ public class MarketSystem : MonoBehaviour
         {
             Debug.Log("No Firefighter to dismiss");
         }
+    }
+
+    public void ShowMarket()
+    {
+        GetComponent<Canvas>().enabled = true;
+        SetTextCredit(_score._credits);
+    }
+
+    public void HideMarket() {
+        GetComponent<Canvas>().enabled = false;
+    }
+
+    public void SetTextCredit(int credits)
+    {
+        if(_textCredit != null)
+        {
+            _textCredit.GetComponent<TMP_Text>().text = "Credits: " + credits;
+        }
+    }
+
+    public void EndPurchase()
+    {
+        _gameManager.nextTurn();
     }
 }

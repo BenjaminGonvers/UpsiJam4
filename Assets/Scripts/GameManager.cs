@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _prefabScore;
     private ScoreSystem _score;
 
-    private Canvas _market; 
+    private MarketSystem _market; 
 
     int number_turn = 0;
 
@@ -41,11 +41,11 @@ public class GameManager : MonoBehaviour
         _evenementSystem = GameObject.Find("EvenementSystem").GetComponent<EvenementSystem>();
 
         _score = Instantiate(_prefabScore, null).GetComponent<ScoreSystem>();
-        _market = GameObject.Find("Market").GetComponent<Canvas>();
+        _market = GameObject.Find("Market").GetComponent<MarketSystem>();
         nextTurn();
     }
 
-    void nextTurn()
+    public void nextTurn()
     {
         _evenementSystem.SetIsFinish(false);
         _resourceSystem.SetIsFinish(false);
@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour
 
         _isCalculate = false;
         isFinish = false;
-        _market.enabled = false;
+        _market.HideMarket();
     }
     // Update is called once per frame
     void Update()
@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
 
                     if (_score.hasResult)
                     {
-                        _market.enabled = true;
+                        _market.ShowMarket();
                     }
                 }
                 
