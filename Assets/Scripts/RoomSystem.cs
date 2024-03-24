@@ -209,13 +209,16 @@ public class Room : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (this._evenement != null)
+        if (!_system.GetPause())
         {
-            this._evenement.EvenementUpdate();
+            if (this._evenement != null)
+            {
+                this._evenement.EvenementUpdate();
 
-            float time = this._evenement.GetEventActualTimer() / this._evenement.GetEventMaxTime();
-            if(_bars != null) 
-                _bars.SetBar(this._id, time);
+                float time = this._evenement.GetEventActualTimer() / this._evenement.GetEventMaxTime();
+                if (_bars != null)
+                    _bars.SetBar(this._id, time);
+            }
         }
     }
 
@@ -234,9 +237,11 @@ public class RoomSystem : MonoBehaviour
     List<Room> rooms;
 
     private RessourceSystem _resourceSystem;
+    private GameManager _gameManager;
     // Start is called before the first frame update
     void Start()
     {
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _resourceSystem = GameObject.Find("RessourceSystem").GetComponent<RessourceSystem>();
         rooms = new List<Room>();
         GameObject[] items = GameObject.FindGameObjectsWithTag("Room");
@@ -248,6 +253,10 @@ public class RoomSystem : MonoBehaviour
             items[i].GetComponent<Room>().SetID(rooms.Count);
             rooms.Add(items[i].GetComponent<Room>());
         }
+    }
+
+    public bool GetPause() {
+        return _gameManager.GetPause();    
     }
 
     public RessourceSystem GetResourceSystem()
@@ -309,5 +318,20 @@ public class RoomSystem : MonoBehaviour
                 break;
         }
         return prefab;
+    }
+
+    public bool AllIsFinish()
+    {
+        bool isFinish = true;
+        foreach (Room room in this.rooms)
+        {
+            if (room.GetHasEvent())
+            {
+                isFinish = false;
+            }
+        }
+
+        return isFinish;
+
     }
 }
