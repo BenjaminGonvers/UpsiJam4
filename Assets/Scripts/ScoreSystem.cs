@@ -20,12 +20,20 @@ public class ScoreSystem : MonoBehaviour
     bool isCalculate = false;
     bool inAnimation = false;
     public bool hasResult = false;
+    private bool _gameOver = false;
+
+    public GameObject GameOverCanvas;
+    public GameObject GameOverScoreText;
     public void Calculate()
     {
         hasResult = false;
         isCalculate = true;
         _roomsAlive = _roomSystem.GetListRoomIsAlive();
         inAnimation = false;
+        if (_roomsAlive.Count <= 5)
+        {
+            GameOver();
+        }
     }
     // Start is called before the first frame update
     void Start()
@@ -75,6 +83,11 @@ public class ScoreSystem : MonoBehaviour
                     isCalculate = false;
                     SetText("");
                     hasResult = true;
+
+                    if (_gameOver)
+                    {
+                        GameOver();
+                    }
                 }
                 
             }
@@ -92,4 +105,10 @@ public class ScoreSystem : MonoBehaviour
         inAnimation = false;
     }
 
+    private void GameOver()
+    {
+        GameOverCanvas.GetComponent<Canvas>().enabled = true;
+        GameOverScoreText.GetComponent<TextMeshProUGUI>().text = "Score : " + score;
+        Debug.Log("Game Over");
+    }
 }
