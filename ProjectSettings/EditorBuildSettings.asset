@@ -8,16 +8,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: ecca9a909b998ef4aae717957b3cf04a
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/InGame.unity
     guid: 1f32f5dedad62d546b7747af4ad48ed2
   - enabled: 1
     path: Assets/Scenes/About.unity
     guid: 7f54926aff1d8a7428f084a753a96e4e
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/EdouardScene.unity
     guid: beca817d366de324dab0ecec67e122b0
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/BenjaminScene.unity
     guid: c8607f8ac8d15af4dad8f3f2d5cf160f
   - enabled: 1

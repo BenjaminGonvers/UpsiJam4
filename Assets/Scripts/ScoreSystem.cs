@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
-using UnityEditor.XR;
 using UnityEngine;
 
 public class ScoreSystem : MonoBehaviour
@@ -78,6 +77,8 @@ public class ScoreSystem : MonoBehaviour
                     _animator.Play("GainCredit");
                     _roomsAlive.Remove(room);
                     inAnimation = true;
+
+                    score += 50;
                 }
                 else
                 {

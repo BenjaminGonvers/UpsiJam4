@@ -2,13 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
-using System.Xml.Linq;
-using Unity.Mathematics;
-using UnityEditor;
 using UnityEngine;
-using UnityEngine.Android;
-using static UnityEditor.Progress;
 
 using TMPro;
 
@@ -333,7 +327,7 @@ public class RoomSystem : MonoBehaviour
 
     public Room GetRandomRoom()
     {
-        List<Room> roomsTmp = rooms;
+        List<Room> roomsTmp = new List<Room>(rooms);
         Room room = this.rooms[UnityEngine.Random.Range(0, rooms.Count)];
         if (room.GetHasEvent())
         {
@@ -408,11 +402,12 @@ public class RoomSystem : MonoBehaviour
     public List<Transform> GetListRoomIsAlive()
     {
         List<Room> roomsAlive = new List<Room>();
-        foreach (Room room in this.rooms)
+        for (int  i = 0; i < rooms.Count; i++)
         {
-            if (!room.GetIsDestroy())
-                roomsAlive.Add(room);
+            if (!rooms[i].GetIsDestroy())
+                roomsAlive.Add(rooms[i]);
         }
+
         
         List<Transform> list = new List<Transform>();
         foreach (Room room in roomsAlive)
