@@ -64,7 +64,7 @@ public class Room : MonoBehaviour
 
     void EventConfining()
     {
-        this.GetComponent<SpriteRenderer>().color = Color.yellow;
+        this.GetComponent<SpriteRenderer>().color = Color.green;
     }
 
     void SetDead()
