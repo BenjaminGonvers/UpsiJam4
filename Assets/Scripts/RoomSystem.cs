@@ -383,7 +383,8 @@ public class RoomSystem : MonoBehaviour
         {
             if (room.GetHasEvent())
             {
-                isFinish = false;
+                if(!room.IsDestroy())
+                    isFinish = false;
             }
         }
 
