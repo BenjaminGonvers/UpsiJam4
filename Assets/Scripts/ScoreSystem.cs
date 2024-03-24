@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
+using UnityEditor.XR;
 using UnityEngine;
 
 public class ScoreSystem : MonoBehaviour
 {
     [SerializeField] private int _maxTurn = 0;
-    [SerializeField] private int _credits = 0;
+    [SerializeField] public int _credits = 0;
     [SerializeField] private int _eventConfined = 0;
     [SerializeField] private int score = 0;
 
@@ -18,8 +19,10 @@ public class ScoreSystem : MonoBehaviour
 
     bool isCalculate = false;
     bool inAnimation = false;
+    public bool hasResult = false;
     public void Calculate()
     {
+        hasResult = false;
         isCalculate = true;
         _roomsAlive = _roomSystem.GetListRoomIsAlive();
         inAnimation = false;
@@ -71,6 +74,7 @@ public class ScoreSystem : MonoBehaviour
                 {
                     isCalculate = false;
                     SetText("");
+                    hasResult = true;
                 }
                 
             }

@@ -167,12 +167,12 @@ public class RessourceSystem : MonoBehaviour
                     {
                         FirefighterTaken++;
                     }
-                }
-
-                SwatContainer.VisibleRessource = RessourceSwat - SwatTaken;
-                PoliceContainer.VisibleRessource = RessourcePolice - PoliceTaken;
-                FirefighterContainer.VisibleRessource = RessourceFirefighter - FirefighterTaken;
+                }                
             }
+
+            SwatContainer.VisibleRessource = RessourceSwat - SwatTaken;
+            PoliceContainer.VisibleRessource = RessourcePolice - PoliceTaken;
+            FirefighterContainer.VisibleRessource = RessourceFirefighter - FirefighterTaken;
         }
     }
 }
