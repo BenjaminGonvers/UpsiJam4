@@ -396,6 +396,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 717386200291864762, guid: 1632889fe53425b48a7863dfa96eb289,
+        type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 717386200291864762, guid: 1632889fe53425b48a7863dfa96eb289,
+        type: 3}
+      propertyPath: m_MatchWidthOrHeight
+      value: 0.161
+      objectReference: {fileID: 0}
+    - target: {fileID: 717386200291864762, guid: 1632889fe53425b48a7863dfa96eb289,
+        type: 3}
+      propertyPath: m_ReferencePixelsPerUnit
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1671708826265885798, guid: 1632889fe53425b48a7863dfa96eb289,
         type: 3}
       propertyPath: m_SizeDelta.x
@@ -471,6 +486,11 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 1165886320}
+    - target: {fileID: 5750275666090771852, guid: 1632889fe53425b48a7863dfa96eb289,
+        type: 3}
+      propertyPath: m_PlaneDistance
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5768014803155980298, guid: 1632889fe53425b48a7863dfa96eb289,
         type: 3}
       propertyPath: m_SizeDelta.x
