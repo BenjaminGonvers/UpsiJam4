@@ -96,6 +96,8 @@ public class GameManager : MonoBehaviour
                     {
                         _market.ShowMarket();
                     }
+
+                    _evenementSystem.AddNewTimer();
                 }
                 
             }

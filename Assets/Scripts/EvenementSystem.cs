@@ -141,6 +141,11 @@ public class EvenementSystem : MonoBehaviour
     // Sera divis� par 100 et extrait � base timer, 100/100 = 1s, 100/50 = 2, 100/10 = 10 (Basetimer - curve value / curve intensity)
     [SerializeField] float curveIntensity = 0.0f;
 
+    public void AddNewTimer()
+    {
+        _timersList.Add(baseTimerCooldown*Random.Range(0.5f,1.5f));
+    }
+
     private void Start()
     {
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
