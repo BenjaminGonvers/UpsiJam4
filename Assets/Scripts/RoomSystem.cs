@@ -10,6 +10,8 @@ using UnityEngine;
 using UnityEngine.Android;
 using static UnityEditor.Progress;
 
+using TMPro;
+
 public class Room : MonoBehaviour
 {
     List<int> quantities;
@@ -172,9 +174,6 @@ public class Room : MonoBehaviour
     {
         if (!_system.GetPause())
         {
-<<<<<<< HEAD
-            this._evenement.EvenementUpdate();
-=======
             if (this._evenement != null)
             {
                 this._evenement.EvenementUpdate();
@@ -183,7 +182,6 @@ public class Room : MonoBehaviour
                 if (_bars != null)
                     _bars.SetBar(this._id, time);
             }
->>>>>>> eafa25a43ba65a8136f10c5742c6b38cd673f855
         }
     }
 
