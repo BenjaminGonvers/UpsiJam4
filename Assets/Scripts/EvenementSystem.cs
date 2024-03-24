@@ -149,7 +149,7 @@ public class EvenementSystem : MonoBehaviour
         {
             float curveValue = difficultyCurve.Evaluate(gameTimer);
 
-            Debug.Log(curveValue);
+            //Debug.Log(curveValue);
             //If max events in game, do nothing
             for (int i = 0; i < _timersList.Count; i++)
             {

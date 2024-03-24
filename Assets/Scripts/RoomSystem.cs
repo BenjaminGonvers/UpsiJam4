@@ -8,6 +8,7 @@ using Unity.Mathematics;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Android;
+using static UnityEditor.Progress;
 
 public class Room : MonoBehaviour
 {
@@ -18,6 +19,10 @@ public class Room : MonoBehaviour
     private GameObject _logoEvent;
     private Evenement _evenement;
 
+    private int _id;
+    UIBar _bars;
+
+    public void SetID(int id) {  this._id = id; }
 
 
     private bool isDestroy = false;
@@ -37,6 +42,7 @@ public class Room : MonoBehaviour
 
     void Start()
     {
+        _bars = GameObject.Find("Canvas_Bar").GetComponent<UIBar>();
         this.GetComponent<SpriteRenderer>().color = Color.white;
 
         this.quantities = new List<int>();
@@ -165,6 +171,10 @@ public class Room : MonoBehaviour
         if (this._evenement != null)
         {
             this._evenement.EvenementUpdate();
+
+            float time = this._evenement.GetEventActualTimer() / this._evenement.GetEventMaxTime();
+            if(_bars != null) 
+                _bars.SetBar(this._id, time);
         }
     }
 
@@ -190,11 +200,12 @@ public class RoomSystem : MonoBehaviour
         rooms = new List<Room>();
         GameObject[] items = GameObject.FindGameObjectsWithTag("Room");
 
-        foreach (var item in items)
+        for (int i = items.Count()-1; i > -1; i--)
         {
-            item.AddComponent<Room>();
-            item.GetComponent<Room>().SetSystem(this);
-            rooms.Add(item.GetComponent<Room>());
+            items[i].AddComponent<Room>();
+            items[i].GetComponent<Room>().SetSystem(this);
+            items[i].GetComponent<Room>().SetID(rooms.Count);
+            rooms.Add(items[i].GetComponent<Room>());
         }
     }
 
