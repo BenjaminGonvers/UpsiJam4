@@ -14,6 +14,9 @@ using TMPro;
 
 public class Room : MonoBehaviour
 {
+
+ 
+
     List<int> quantities;
     List<RessourceSystem.ResourceType>  resourcesTypes;
 
@@ -140,31 +143,37 @@ public class Room : MonoBehaviour
 
     void Update()
     {
-        if (this._evenement != null)
+        if (!_system.GetPause())
         {
-            if (_evenement.eventIsAlive)
+            if (!_system.GetIsFinish())
             {
-                switch (_evenement.GetEventState())
+                if (this._evenement != null)
                 {
-                    case EventState.EventConfining:
-                        this.EventConfining();
-                        break;
-                    case EventState.EventBreach:
-                        this.EventBreaching();
-                        break;
-                }
-            }
+                    if (_evenement.eventIsAlive)
+                    {
+                        switch (_evenement.GetEventState())
+                        {
+                            case EventState.EventConfining:
+                                this.EventConfining();
+                                break;
+                            case EventState.EventBreach:
+                                this.EventBreaching();
+                                break;
+                        }
+                    }
 
-            if (!_evenement.eventIsAlive)
-            {
-                switch (_evenement.GetEventState())
-                {
-                    case EventState.EventConfining:
-                        this.ClearEvent();
-                        break;
-                    case EventState.EventBreach:
-                        this.SetDead();
-                        break;
+                    if (!_evenement.eventIsAlive)
+                    {
+                        switch (_evenement.GetEventState())
+                        {
+                            case EventState.EventConfining:
+                                this.ClearEvent();
+                                break;
+                            case EventState.EventBreach:
+                                this.SetDead();
+                                break;
+                        }
+                    }
                 }
             }
         }
@@ -174,13 +183,16 @@ public class Room : MonoBehaviour
     {
         if (!_system.GetPause())
         {
-            if (this._evenement != null)
+            if(!_system.GetIsFinish())
             {
-                this._evenement.EvenementUpdate();
+                if (this._evenement != null)
+                {
+                    this._evenement.EvenementUpdate();
 
-                float time = this._evenement.GetEventActualTimer() / this._evenement.GetEventMaxTime();
-                if (_bars != null)
-                    _bars.SetBar(this._id, time);
+                    float time = this._evenement.GetEventActualTimer() / this._evenement.GetEventMaxTime();
+                    if (_bars != null)
+                        _bars.SetBar(this._id, time);
+                }
             }
         }
     }
@@ -253,11 +265,22 @@ public class Room : MonoBehaviour
 
     void OnMouseExit()
     {
-         GetComponentInChildren<TextMeshPro>().enabled = false;
+         GetComponentInChildren<TextMeshPro>().enabled = false; 
     }
 } 
 public class RoomSystem : MonoBehaviour
 {
+    private bool _isFinish = false;
+    public void SetIsFinish(bool isFinish)
+    {
+        this._isFinish = isFinish;
+    }
+
+    public bool GetIsFinish()
+    {
+        return this._isFinish;
+    }
+
     [SerializeField] private GameObject _prefab_logo_manifestion;
     [SerializeField] private GameObject _prefab_logo_biological;
     [SerializeField] private GameObject _prefab_logo_fire;

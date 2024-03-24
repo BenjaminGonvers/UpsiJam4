@@ -5,7 +5,10 @@ using UnityEngine.Android;
 
 public class GameManager : MonoBehaviour
 {
-    public RessourceSystem RessourceSystem_;
+
+    private RoomSystem _roomSystem;
+    private RessourceSystem _resourceSystem;
+    private EvenementSystem _evenementSystem;
 
     int number_day = 0;
 
@@ -15,7 +18,6 @@ public class GameManager : MonoBehaviour
     bool isPause = false;
     bool isFinish = false;
 
-    private RoomSystem _roomSystem;
     public bool GetPause()
     {
         return isPause;
@@ -29,6 +31,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         _roomSystem = GameObject.Find("RoomSystem").GetComponent<RoomSystem>();
+        _resourceSystem = GameObject.Find("RessourceSystem").GetComponent<RessourceSystem>();
+        _evenementSystem = GameObject.Find("EvenementSystem").GetComponent<EvenementSystem>();
         nextTurn();
     }
 
@@ -53,11 +57,21 @@ public class GameManager : MonoBehaviour
                 {
                     // End Turn
                     isFinish = true;
+                    _evenementSystem.SetIsFinish(true);
                 }
             }
             else
             {
+                if (_roomSystem.AllIsFinish())
+                {
+                    _evenementSystem.SetIsFinish(true);
+                    _resourceSystem.SetIsFinish(true);
+                    _roomSystem.SetIsFinish(true);
+                }
+                else
+                {
 
+                }
             }
         }
     }
