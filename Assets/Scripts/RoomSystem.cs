@@ -33,6 +33,10 @@ public class Room : MonoBehaviour
     private bool isDestroy = false;
     private bool hasEvent = false;
 
+    public bool GetIsDestroy()
+    {
+        return isDestroy;
+    }
     public void SetSystem(RoomSystem system)
     {
         this._system = system;
@@ -384,6 +388,37 @@ public class RoomSystem : MonoBehaviour
         }
 
         return isFinish;
+    }
 
+    public int NumberRoomIsAlive()
+    {
+        int counter = 0;
+        foreach (Room room in this.rooms)
+        {
+            if (!room.GetIsDestroy())
+            {
+                counter++;
+            }
+        }
+
+        return counter;
+    }
+
+    public List<Transform> GetListRoomIsAlive()
+    {
+        List<Room> roomsAlive = new List<Room>();
+        foreach (Room room in this.rooms)
+        {
+            if (!room.GetIsDestroy())
+                roomsAlive.Add(room);
+        }
+        
+        List<Transform> list = new List<Transform>();
+        foreach (Room room in roomsAlive)
+        {
+            list.Add(room.gameObject.transform);
+        }
+
+        return list;
     }
 }

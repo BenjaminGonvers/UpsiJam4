@@ -1,55 +1,91 @@
-using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using TMPro;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 public class ScoreSystem : MonoBehaviour
 {
-    [SerializeField] private int _hitBasePoint;
-    [SerializeField] private int _recyclingBasePoint;
-    [SerializeField] private float _killModifier;
-    [SerializeField] private int _score;
+    [SerializeField] private int _maxTurn = 0;
+    [SerializeField] private int _credits = 0;
+    [SerializeField] private int _eventConfined = 0;
+    [SerializeField] private int score = 0;
 
-    private int _hitCombo;
-    private float _headShotModifier;
-    private float _recyclingComboModifier;
+    private RoomSystem _roomSystem;
+    private List<Transform> _roomsAlive;
 
-    public int Score => _score;
+    private Animator _animator;
 
-    private void Awake()
+    bool isCalculate = false;
+    bool inAnimation = false;
+    public void Calculate()
     {
-        var scoreSystems = FindObjectsByType<ScoreSystem>(FindObjectsSortMode.None);
-        if (scoreSystems.Length > 1)
+        isCalculate = true;
+        _roomsAlive = _roomSystem.GetListRoomIsAlive();
+        inAnimation = false;
+    }
+    // Start is called before the first frame update
+    void Start()
+    {
+        DontDestroyOnLoad(this);
+        _roomSystem = GameObject.Find("RoomSystem").GetComponent<RoomSystem>();
+        _animator = GetComponent<Animator>();
+    }
+
+    public void GainCredit(int credits)
+    {
+        _credits += credits;
+    }
+    public void LeaveCredit(int price)
+    {
+        _credits -= price;
+    }
+
+    public void TurnSurvive()
+    {
+        _maxTurn++;
+    }
+
+    public void EventConfined()
+    {
+        _eventConfined++;
+    }
+
+    private void Update()
+    {
+        if (isCalculate)
         {
-            Destroy(gameObject);
+            if (!inAnimation)
+            {
+                if (_roomsAlive.Count != 0)
+                {
+                    Transform room = _roomsAlive.First();
+                    _credits += 50;
+                    this.transform.position = room.position;
+                    SetText("+ " + _credits);
+                    _animator.Play("GainCredit");
+                    _roomsAlive.Remove(room);
+                    inAnimation = true;
+                }
+                else
+                {
+                    isCalculate = false;
+                    SetText("");
+                }
+                
+            }
         }
     }
 
-    private void Start()
+    public void SetText(string msg)
     {
-        DontDestroyOnLoad(gameObject);
+        TextMeshPro text = GetComponentInChildren<TextMeshPro>();
+        text.text = msg;
     }
 
-    public void ResetScore()
+    public void NextRoom()
     {
-        _score = 0;
+        inAnimation = false;
     }
 
-    public void OnEnemyShoot(bool kill)
-    {
-        float scoreReturn = _hitBasePoint;
-
-        if (kill)
-        {
-            scoreReturn *= _killModifier;
-        }
-
-        _score += Mathf.CeilToInt(scoreReturn);
-    }
-
-    public void OnRecycle(int bodyCount)
-    {
-        float scoreReturn = _recyclingBasePoint * bodyCount;
-
-        _score += Mathf.CeilToInt(scoreReturn);
-    }
 }

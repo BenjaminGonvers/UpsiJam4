@@ -19,6 +19,7 @@ public class PauseSystem : MonoBehaviour
 
     public void MainMenu()
     {
+        _gameManager.EndParty();
         _gameManager.SetPause(false);
         GameObject.Find("SceneSystem").GetComponent<LevelLoader>().LoadScene("MainMenu");
         Destroy(this.gameObject);

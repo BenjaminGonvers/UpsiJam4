@@ -10,13 +10,17 @@ public class GameManager : MonoBehaviour
     private RessourceSystem _resourceSystem;
     private EvenementSystem _evenementSystem;
 
+    [SerializeField] private GameObject _prefabScore;
+    private ScoreSystem _score;
+
     int number_turn = 0;
 
     const float TURN_TIME = 30.0f;
     float counterTime = 0.0f;
 
    private bool _isPause = false;
-    bool isFinish = false;
+   bool isFinish = false;
+    bool _isCalculate = false;
 
     public bool GetPause()
     {
@@ -33,6 +37,9 @@ public class GameManager : MonoBehaviour
         _roomSystem = GameObject.Find("RoomSystem").GetComponent<RoomSystem>();
         _resourceSystem = GameObject.Find("RessourceSystem").GetComponent<RessourceSystem>();
         _evenementSystem = GameObject.Find("EvenementSystem").GetComponent<EvenementSystem>();
+
+        _score = Instantiate(_prefabScore, null).GetComponent<ScoreSystem>();
+
         nextTurn();
     }
 
@@ -43,7 +50,9 @@ public class GameManager : MonoBehaviour
         _roomSystem.SetIsFinish(false);
         number_turn++;
         counterTime = TURN_TIME;
-      
+
+        _isCalculate = false;
+        isFinish = false;
     }
     // Update is called once per frame
     void Update()
@@ -72,10 +81,13 @@ public class GameManager : MonoBehaviour
                     _evenementSystem.SetIsFinish(true);
                     _resourceSystem.SetIsFinish(true);
                     _roomSystem.SetIsFinish(true);
-                }
-                else
-                {
 
+
+                    if (!_isCalculate)
+                    {
+                        _score.Calculate();
+                        _isCalculate = true;
+                    }
                 }
             }
         }
@@ -84,5 +96,10 @@ public class GameManager : MonoBehaviour
     public void SetPause(bool ispause)
     {
         _isPause = ispause;
+    }
+
+    public void EndParty()
+    {
+        Destroy(_score.gameObject);
     }
 }
