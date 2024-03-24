@@ -237,23 +237,23 @@ public class Room : MonoBehaviour
 
                 if (PourCent > 0.0f)
                 {
-                    GetComponentInChildren<TextMeshPro>().enabled = true;
-                    GetComponentInChildren<TextMeshPro>().text = (PourCent*100).ToString()+"%";
+                     GetComponentInChildren<TextMeshPro>().enabled = true;
+                     GetComponentInChildren<TextMeshPro>().text = (PourCent * 100).ToString() + "%";
                 }
                 else
                 {
-                    GetComponentInChildren<TextMeshPro>().enabled = false;
+                     GetComponentInChildren<TextMeshPro>().enabled = false;
                 }
                
             }else
             {
-                GetComponentInChildren<TextMeshPro>().enabled = false;
+                 GetComponentInChildren<TextMeshPro>().enabled = false;
             }
         }
 
     void OnMouseExit()
     {
-        GetComponentInChildren<TextMeshPro>().enabled = false;
+         GetComponentInChildren<TextMeshPro>().enabled = false;
     }
 } 
 public class RoomSystem : MonoBehaviour
