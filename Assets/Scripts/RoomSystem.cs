@@ -104,6 +104,47 @@ public class Room : MonoBehaviour
 
         this.quantities.Clear();
         this.resourcesTypes.Clear();
+
+        void OnMouseOver()
+        {
+            float PourCent = 0.0f;
+
+            if (resourceSystem.FirefighterTaken > 0)
+            {
+                if (2 == (int)_evenement.eventType)
+                {
+                    PourCent += resourceSystem.FirefighterTaken /_evenement.numberOfUnitNeeded;
+                }
+                else
+                {
+                    PourCent += resourceSystem.FirefighterTaken * _evenement.badUnitModifier / _evenement.numberOfUnitNeeded;
+                }
+
+            }else if (resourceSystem.PoliceTaken > 0)
+            {
+                if (1 == (int) _evenement.eventType)
+                {
+                    PourCent += resourceSystem.PoliceTaken / _evenement.numberOfUnitNeeded;
+                }
+                else
+                {
+                    PourCent += resourceSystem.PoliceTaken * _evenement.badUnitModifier / _evenement.numberOfUnitNeeded;
+                }
+            }
+            else if (resourceSystem.SwatTaken > 0)
+            {
+                if (0 == (int) _evenement.eventType)
+                {
+                    PourCent += resourceSystem.SwatTaken / _evenement.numberOfUnitNeeded;
+                }
+                else
+                {
+                    PourCent += resourceSystem.SwatTaken * _evenement.badUnitModifier / _evenement.numberOfUnitNeeded;
+                }
+            }
+
+
+        }
     }
 
     public void GiveResource(RessourceSystem.ResourceType type, int quantity)
