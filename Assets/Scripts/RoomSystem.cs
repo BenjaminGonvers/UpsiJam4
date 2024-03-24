@@ -105,46 +105,7 @@ public class Room : MonoBehaviour
         this.quantities.Clear();
         this.resourcesTypes.Clear();
 
-        void OnMouseOver()
-        {
-            float PourCent = 0.0f;
-
-            if (resourceSystem.FirefighterTaken > 0)
-            {
-                if (2 == (int)_evenement.eventType)
-                {
-                    PourCent += resourceSystem.FirefighterTaken /_evenement.numberOfUnitNeeded;
-                }
-                else
-                {
-                    PourCent += resourceSystem.FirefighterTaken * _evenement.badUnitModifier / _evenement.numberOfUnitNeeded;
-                }
-
-            }else if (resourceSystem.PoliceTaken > 0)
-            {
-                if (1 == (int) _evenement.eventType)
-                {
-                    PourCent += resourceSystem.PoliceTaken / _evenement.numberOfUnitNeeded;
-                }
-                else
-                {
-                    PourCent += resourceSystem.PoliceTaken * _evenement.badUnitModifier / _evenement.numberOfUnitNeeded;
-                }
-            }
-            else if (resourceSystem.SwatTaken > 0)
-            {
-                if (0 == (int) _evenement.eventType)
-                {
-                    PourCent += resourceSystem.SwatTaken / _evenement.numberOfUnitNeeded;
-                }
-                else
-                {
-                    PourCent += resourceSystem.SwatTaken * _evenement.badUnitModifier / _evenement.numberOfUnitNeeded;
-                }
-            }
-
-
-        }
+        
     }
 
     public void GiveResource(RessourceSystem.ResourceType type, int quantity)
@@ -211,6 +172,9 @@ public class Room : MonoBehaviour
     {
         if (!_system.GetPause())
         {
+<<<<<<< HEAD
+            this._evenement.EvenementUpdate();
+=======
             if (this._evenement != null)
             {
                 this._evenement.EvenementUpdate();
@@ -219,12 +183,79 @@ public class Room : MonoBehaviour
                 if (_bars != null)
                     _bars.SetBar(this._id, time);
             }
+>>>>>>> eafa25a43ba65a8136f10c5742c6b38cd673f855
         }
     }
 
     public bool CanReceiveResource()
     {
         return this._evenement != null && this._evenement.eventIsAlive;
+    }
+
+    void OnMouseOver()
+        {
+            float PourCent = 0.0f;
+            if (_evenement != null && _evenement.eventIsAlive)
+            {
+                RessourceSystem resourceSystem = this._system.GetResourceSystem();
+
+                if (resourceSystem.FirefighterTaken > 0)
+                {
+                    if (2 == (int) _evenement.eventType)
+                    {
+                        PourCent += resourceSystem.FirefighterTaken / _evenement.numberOfUnitNeeded;
+                    }
+                    else
+                    {
+                        PourCent += resourceSystem.FirefighterTaken * _evenement.badUnitModifier /
+                                    _evenement.numberOfUnitNeeded;
+                    }
+
+                }
+                else if (resourceSystem.PoliceTaken > 0)
+                {
+                    if (1 == (int) _evenement.eventType)
+                    {
+                        PourCent += resourceSystem.PoliceTaken / _evenement.numberOfUnitNeeded;
+                    }
+                    else
+                    {
+                        PourCent += resourceSystem.PoliceTaken * _evenement.badUnitModifier /
+                                    _evenement.numberOfUnitNeeded;
+                    }
+                }
+                else if (resourceSystem.SwatTaken > 0)
+                {
+                    if (0 == (int) _evenement.eventType)
+                    {
+                        PourCent += resourceSystem.SwatTaken / _evenement.numberOfUnitNeeded;
+                    }
+                    else
+                    {
+                        PourCent += resourceSystem.SwatTaken * _evenement.badUnitModifier /
+                                    _evenement.numberOfUnitNeeded;
+                    }
+                }
+
+                if (PourCent > 0.0f)
+                {
+                    GetComponentInChildren<TextMeshPro>().enabled = true;
+                    GetComponentInChildren<TextMeshPro>().text = (PourCent*100).ToString()+"%";
+                }
+                else
+                {
+                    GetComponentInChildren<TextMeshPro>().enabled = false;
+                }
+               
+            }else
+            {
+                GetComponentInChildren<TextMeshPro>().enabled = false;
+            }
+        }
+
+    void OnMouseExit()
+    {
+        GetComponentInChildren<TextMeshPro>().enabled = false;
     }
 } 
 public class RoomSystem : MonoBehaviour
