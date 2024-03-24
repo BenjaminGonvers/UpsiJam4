@@ -10,17 +10,17 @@ public class GameManager : MonoBehaviour
     private RessourceSystem _resourceSystem;
     private EvenementSystem _evenementSystem;
 
-    int number_day = 0;
+    int number_turn = 0;
 
     const float TURN_TIME = 30.0f;
     float counterTime = 0.0f;
 
-    bool isPause = false;
+   private bool _isPause = false;
     bool isFinish = false;
 
     public bool GetPause()
     {
-        return isPause;
+        return _isPause;
     }
 
     public bool GetFinish()
@@ -38,7 +38,12 @@ public class GameManager : MonoBehaviour
 
     void nextTurn()
     {
+        _evenementSystem.SetIsFinish(false);
+        _resourceSystem.SetIsFinish(false);
+        _roomSystem.SetIsFinish(false);
+        number_turn++;
         counterTime = TURN_TIME;
+      
     }
     // Update is called once per frame
     void Update()
@@ -48,7 +53,7 @@ public class GameManager : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!isPause)
+        if (!_isPause)
         {
             if (!isFinish)
             {
@@ -74,5 +79,10 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void SetPause(bool ispause)
+    {
+        _isPause = ispause;
     }
 }

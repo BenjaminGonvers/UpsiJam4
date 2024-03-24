@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/BenjaminScene.unity
     guid: c8607f8ac8d15af4dad8f3f2d5cf160f
+  - enabled: 1
+    path: Assets/Scenes/Dylan.unity
+    guid: 0b6682ddc35ff1a4f82fe6e9a2bf93bc
   m_configObjects: {}
