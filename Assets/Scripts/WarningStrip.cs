@@ -13,8 +13,12 @@ public class WarningStrip : MonoBehaviour
     
     public List<string> WarningList = new List<string>();
 
+    private SoundManager _soundManager;
+
     void Start()
     {
+        if (GameObject.Find("SoundManager"))
+            _soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         transform.position = new Vector3(9, -(float)4.5, -1);
     }
     private string GetRandomWarning()
@@ -39,6 +43,8 @@ public class WarningStrip : MonoBehaviour
             TimeLastWarning = 0.0f;
             transform.position = new Vector3(9, -(float) 4.5, -1);
             GetComponent<TextMeshPro>().text = GetRandomWarning();
+            if(_soundManager)
+                _soundManager.PlaySound(SoundManager.Sound.BreakingNews);
         }
         else
         {

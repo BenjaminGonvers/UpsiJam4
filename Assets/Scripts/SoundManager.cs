@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -8,16 +9,17 @@ public class SoundManager : MonoBehaviour
     private const int MAX_MUSIC_COUNT = 2;
     private const float VELOCITY = 100;
 
-    [Header("Menu")] [SerializeField] private AudioClip clickBtn;
+    [Header("Menu")] 
+    [SerializeField] private AudioClip clickBtn;
     [SerializeField] private AudioClip switchBtn;
 
-    [Header("Voice")] [SerializeField] private AudioClip ready;
-    [SerializeField] private AudioClip go;
+    [Header("Event")]
+    [SerializeField] private AudioClip Alert;
 
-    [Header("Player")] [SerializeField] private AudioClip[] footSteps;
-    [SerializeField] private AudioClip[] shots;
+    [Header("BreakingNews")]
+    [SerializeField] private AudioClip[] _breakingNews;
 
-    [Header("Camera")] [SerializeField] private AudioClip[] rumbles;
+
 
     [Header("Music")] [SerializeField] private AudioClip mainMenu;
     [SerializeField] private AudioClip inGame;
@@ -31,13 +33,7 @@ public class SoundManager : MonoBehaviour
     private List<AudioSource> m_SoundsSource;
     private List<AudioSource> m_MusicsSource;
 
-
-
     private int _transitionState = 1;
-    // private int _volumeSound = 100;
-    // private int _volumeVoice = 100;
-    // private int _volumeMusic = 100;
-    // private int _volumeMaster = 100;
 
     private float _volumeMusic0 = 100;
     private float _volumeMusic1 = 0;
@@ -46,27 +42,21 @@ public class SoundManager : MonoBehaviour
     {
         Master = 0,
         Sound = 1,
-        Music = 2,
-        Voice = 3
+        Menu = 2,
+        Music = 3,
+        Voice = 4
+    }
+
+    public enum Menu
+    {
+        Switch = 0,
+        Press = 1,
     }
 
     public enum Sound
     {
-        Switch = 0,
-        Shot = 1,
-        Reload = 2,
-        Button = 3,
-        Hurt = 4,
-        CollecAmmunition = 5,
-        DropCorpse = 6,
-        Jump = 7,
-        Landing = 8,
-        Footstep = 9,
-        Lose = 10,
-        PickupScrap = 11,
-        Rumble = 12,
-        RecyclingDone = 13,
-        Explosion = 14
+        Alert = 0,
+        BreakingNews = 1
     }
 
     public enum Voice
@@ -123,25 +113,12 @@ public class SoundManager : MonoBehaviour
         AudioClip audioResource = null;
         switch (sound)
         {
-            case Sound.Switch:
-                audioResource = switchBtn;
-                break;
-            case Sound.Shot:
-                audioResource = shots[Random.Range(0, shots.Length - 1)];
-
+            case Sound.Alert:
+                audioResource = Alert;
                 break;
 
-            case Sound.Button:
-                audioResource = clickBtn;
-                break;
-
-
-            case Sound.Footstep:
-                audioResource = footSteps[Random.Range(0, footSteps.Length - 1)];
-                break;
-
-            case Sound.Rumble:
-                audioResource = rumbles[Random.Range(0, rumbles.Length - 1)];
+            case Sound.BreakingNews:
+                audioResource = _breakingNews[Random.Range(0, _breakingNews.Count() - 1)];
                 break;
 
         }
@@ -165,12 +142,7 @@ public class SoundManager : MonoBehaviour
         AudioClip audioResource = null;
         switch (voice)
         {
-            case Voice.Ready:
-                audioResource = ready;
-                break;
-            case Voice.Go:
-                audioResource = go;
-                break;
+            //To Complete
         }
 
         // One AudioSource is free ?

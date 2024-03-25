@@ -333,8 +333,18 @@ PrefabInstance:
       objectReference: {fileID: 5301400337980528808}
     - target: {fileID: 8550036648535289155, guid: 8dfe643ee4235df42adff431163f0a37,
         type: 3}
+      propertyPath: maxEvenements
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550036648535289155, guid: 8dfe643ee4235df42adff431163f0a37,
+        type: 3}
       propertyPath: curveIntensity
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550036648535289155, guid: 8dfe643ee4235df42adff431163f0a37,
+        type: 3}
+      propertyPath: _timersList.Array.size
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8550036648535289155, guid: 8dfe643ee4235df42adff431163f0a37,
         type: 3}
@@ -350,6 +360,26 @@ PrefabInstance:
         type: 3}
       propertyPath: _timersList.Array.data[2]
       value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550036648535289155, guid: 8dfe643ee4235df42adff431163f0a37,
+        type: 3}
+      propertyPath: _timersList.Array.data[3]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550036648535289155, guid: 8dfe643ee4235df42adff431163f0a37,
+        type: 3}
+      propertyPath: _timersList.Array.data[4]
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550036648535289155, guid: 8dfe643ee4235df42adff431163f0a37,
+        type: 3}
+      propertyPath: _timersList.Array.data[5]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8550036648535289155, guid: 8dfe643ee4235df42adff431163f0a37,
+        type: 3}
+      propertyPath: _timersList.Array.data[6]
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

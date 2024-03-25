@@ -115,6 +115,9 @@ public class Evenement
 
 public class EvenementSystem : MonoBehaviour
 {
+
+    private SoundManager _soundManager;
+
     private bool _isFinish = false;
     public void SetIsFinish(bool isFinish)
     {
@@ -143,11 +146,17 @@ public class EvenementSystem : MonoBehaviour
     public void AddNewTimer()
     {
         _timersList.Add(baseTimerCooldown*Random.Range(0.5f,1.5f));
+        if(_timersList.Count % 5  == 0)
+        {
+            maxEvenements++;
+        }
     }
 
     private void Start()
     {
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
+        if(GameObject.Find("SoundManager"))
+            _soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
     }
 
     void Update()
@@ -226,5 +235,7 @@ public class EvenementSystem : MonoBehaviour
     void AddEventTypetoRoom(int room, Evenement evenement)
     {
         _roomSystem.SetEvenenement(room, evenement);
+        if(_soundManager)
+            _soundManager.PlaySound(SoundManager.Sound.Alert);
     }
 }

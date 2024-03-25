@@ -11,6 +11,7 @@ public class Room : MonoBehaviour
     List<int> quantities;
     List<RessourceSystem.ResourceType>  resourcesTypes;
 
+    private SoundManager _soundManager;
     private RessourceSystem _resourceSystem;
     private GameObject _logoEvent;
     private Evenement _evenement;
@@ -43,6 +44,8 @@ public class Room : MonoBehaviour
 
     void Start()
     {
+        if (GameObject.Find("SoundManager"))
+            _soundManager = GameObject.Find("SoundManager").GetComponent<SoundManager>();
         _bars = GameObject.Find("Canvas_Bar").GetComponent<UIBar>();
         this.GetComponent<SpriteRenderer>().color = Color.white;
 
@@ -305,6 +308,7 @@ public class RoomSystem : MonoBehaviour
 
     public void SetEvenenement(int id, Evenement evenement)
     {
+        
         GameObject logoEvent = Instantiate(GetPrefabLogo(evenement.eventType), rooms[id].gameObject.transform, false);
         this.rooms[id].SetEvenement(evenement, logoEvent);
     }

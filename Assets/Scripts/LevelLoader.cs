@@ -17,7 +17,7 @@ public class LevelLoader : MonoBehaviour
 
         if (soundManager)
         {
-            soundManager.GetComponent<SoundManager>().PlaySound(SoundManager.Sound.Button);
+            //soundManager.GetComponent<SoundManager>().PlaySound(SoundManager.Sound.Button);
         }
 
         LoadScene(sceneName);
@@ -57,7 +57,7 @@ public class LevelLoader : MonoBehaviour
 
         if (soundManager)
         {
-            soundManager.GetComponent<SoundManager>().PlaySound(SoundManager.Sound.Button);
+            //soundManager.GetComponent<SoundManager>().PlaySound(SoundManager.Sound.Button);
         }
 
         Application.Quit();
