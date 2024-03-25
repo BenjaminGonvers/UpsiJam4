@@ -5,19 +5,21 @@ using UnityEngine.Android;
 
 public class GameManager : MonoBehaviour
 {
-
     private RoomSystem _roomSystem;
     private RessourceSystem _resourceSystem;
     private EvenementSystem _evenementSystem;
 
     [SerializeField] private GameObject _prefabScore;
     private ScoreSystem _score;
+    private MarketSystem _market;
 
-    private MarketSystem _market; 
+
+    [SerializeField] private List<GameObject> Life;
+    [SerializeField] private GameObject _prefabBroken;
 
     int number_turn = 0;
 
-    const float TURN_TIME = 2.0f;
+    const float TURN_TIME = 30.0f;
     float counterTime = 0.0f;
 
    private bool _isPause = false;
@@ -112,5 +114,17 @@ public class GameManager : MonoBehaviour
     public void EndParty()
     {
         Destroy(_score.gameObject);
+    }
+
+    int life = 3;
+    public void LostLife()
+    {
+        if (life > 0)
+        {
+            GameObject gameObject = Instantiate(_prefabBroken, null);
+            gameObject.transform.position = this.Life[life].transform.position;
+            this.Life[life].SetActive(false);
+            life--;
+        }
     }
 }

@@ -162,9 +162,12 @@ public class Room : MonoBehaviour
                                 this.ClearEvent();
                                 break;
                             case EventState.EventBreach:
-                                this._bars.SetBar(_id, 0);
-                                this.SetDead(roomSystem);
-                                
+                                if (!isDestroy)
+                                {
+                                    this._bars.SetBar(_id, 0);
+                                    this.SetDead(roomSystem);
+                                    roomSystem.RoomDead();
+                                }
                                 break;
                         }
                     }
@@ -440,5 +443,10 @@ public class RoomSystem : MonoBehaviour
             list.Add(room.gameObject.transform);
         }
         return list;
+    }
+
+    public void RoomDead()
+    {
+        _gameManager.LostLife();
     }
 }

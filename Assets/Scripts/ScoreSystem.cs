@@ -13,6 +13,7 @@ public class ScoreSystem : MonoBehaviour
 
     private RoomSystem _roomSystem;
     private List<Transform> _roomsAlive;
+    private GameManager _gameManager;
 
     private Animator _animator;
 
@@ -39,6 +40,7 @@ public class ScoreSystem : MonoBehaviour
     void Start()
     {
         DontDestroyOnLoad(this);
+        _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _roomSystem = GameObject.Find("RoomSystem").GetComponent<RoomSystem>();
         _animator = GetComponent<Animator>();
     }
