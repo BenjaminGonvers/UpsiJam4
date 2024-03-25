@@ -47,7 +47,7 @@ public class ScoreSystem : MonoBehaviour
     {
         _credits += credits;
     }
-    public void LeaveCredit(int price)
+    public void SpendCredit(int price)
     {
         _credits -= price;
     }

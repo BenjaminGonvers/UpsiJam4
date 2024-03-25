@@ -36,8 +36,7 @@ public class MarketSystem : MonoBehaviour
             if (_resource.RessourceSwat < _resource.MaxRessourceSwat)
             {
                 _resource.RessourceSwat++;
-                _score._credits -= SwatPrice;
-                _score.LeaveCredit(SwatPrice);
+                _score.SpendCredit(SwatPrice);
             }
         }
         else
@@ -51,7 +50,6 @@ public class MarketSystem : MonoBehaviour
         if (_resource.RessourceSwat > 0)
         {
             _resource.RessourceSwat--;
-            _score._credits += SwatPrice;
             _score.GainCredit(SwatPrice);
         }
         else
@@ -67,8 +65,7 @@ public class MarketSystem : MonoBehaviour
             if (_resource.RessourcePolice < _resource.MaxRessourcePolice)
             {
                 _resource.RessourcePolice++;
-                _score._credits -= PolicePrice;
-                _score.LeaveCredit(PolicePrice);
+                _score.SpendCredit(PolicePrice);
             }
         }
         else
@@ -82,7 +79,6 @@ public class MarketSystem : MonoBehaviour
         if (_resource.RessourcePolice > 0)
         {
             _resource.RessourcePolice--;
-            _score._credits += PolicePrice;
             _score.GainCredit(PolicePrice);
         }
         else
@@ -98,8 +94,7 @@ public class MarketSystem : MonoBehaviour
             if (_resource.RessourceFirefighter < _resource.MaxRessourceFirefighter)
             {
                 _resource.RessourceFirefighter++;
-                _score._credits -= FirefighterPrice;
-                _score.LeaveCredit(FirefighterPrice);
+                _score.SpendCredit(FirefighterPrice);
             }
         }
         else
@@ -113,7 +108,6 @@ public class MarketSystem : MonoBehaviour
         if (_resource.RessourceFirefighter > 0)
         {
             _resource.RessourceFirefighter--;
-            _score._credits += FirefighterPrice;
             _score.GainCredit(FirefighterPrice);
         }
         else

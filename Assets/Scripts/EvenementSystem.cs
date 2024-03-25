@@ -179,7 +179,7 @@ public class EvenementSystem : MonoBehaviour
                                     if (!myRoom.GetHasEvent())
                                     {
 
-                                        addEvents(_roomSystem.GetRandomRoom());
+                                        addEvents(_roomSystem.GetRandomRoomId());
                                     }
                                 }
                             }
@@ -205,7 +205,7 @@ public class EvenementSystem : MonoBehaviour
         }
     }
 
-    void addEvents(Room room)
+    void addEvents(int room)
     {
         EventList eventType = EventList.Count;
         switch (UnityEngine.Random.Range(0, (int)EventList.Count))
@@ -222,8 +222,9 @@ public class EvenementSystem : MonoBehaviour
         }
         AddEventTypetoRoom(room, new Evenement(eventType));
     }
-    void AddEventTypetoRoom(Room room, Evenement evenement)
+
+    void AddEventTypetoRoom(int room, Evenement evenement)
     {
-        room.SetEvenement(evenement);
+        _roomSystem.SetEvenenement(room, evenement);
     }
 }

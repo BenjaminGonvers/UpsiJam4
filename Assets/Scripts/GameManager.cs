@@ -17,7 +17,7 @@ public class GameManager : MonoBehaviour
 
     int number_turn = 0;
 
-    const float TURN_TIME = 30.0f;
+    const float TURN_TIME = 2.0f;
     float counterTime = 0.0f;
 
    private bool _isPause = false;

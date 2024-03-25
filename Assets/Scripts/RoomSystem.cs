@@ -8,13 +8,10 @@ using TMPro;
 
 public class Room : MonoBehaviour
 {
-
- 
-
     List<int> quantities;
     List<RessourceSystem.ResourceType>  resourcesTypes;
 
-    private RoomSystem _system;
+    private RessourceSystem _resourceSystem;
     private GameObject _logoEvent;
     private Evenement _evenement;
 
@@ -27,13 +24,14 @@ public class Room : MonoBehaviour
     private bool isDestroy = false;
     private bool hasEvent = false;
 
+    public void SetResourceSystem(RessourceSystem resourceSystem)
+    {
+        this._resourceSystem = resourceSystem;
+    }
+
     public bool GetIsDestroy()
     {
         return isDestroy;
-    }
-    public void SetSystem(RoomSystem system)
-    {
-        this._system = system;
     }
 
     //Ressource
@@ -52,12 +50,12 @@ public class Room : MonoBehaviour
         this.resourcesTypes = new List<RessourceSystem.ResourceType>();
     }
 
-    public void SetEvenement(Evenement evenement)
+    public void SetEvenement(Evenement evenement, GameObject logoEvent)
     {
         this._evenement = evenement;
         this.hasEvent = true;
 
-        _logoEvent = Instantiate(this._system.GetPrefabLogo(evenement.eventType), this.gameObject.transform, false);
+        _logoEvent = logoEvent;
     }
 
     void EventBreaching()
@@ -70,12 +68,12 @@ public class Room : MonoBehaviour
         this.GetComponent<SpriteRenderer>().color = Color.green;
     }
 
-    void SetDead()
+    void SetDead(RoomSystem roomSystem)
     {
         this.isDestroy = true;
         this.GetComponent<SpriteRenderer>().color = Color.grey;
         Destroy(_logoEvent);
-        _logoEvent = Instantiate(this._system.GetPrefabLabotaryBroken(), this.gameObject.transform, false);
+        _logoEvent = Instantiate(roomSystem.GetPrefabLabotaryBroken(), this.gameObject.transform, false);
     }
 
 
@@ -87,28 +85,25 @@ public class Room : MonoBehaviour
         Destroy(_logoEvent);
         _logoEvent = null;
 
-        RessourceSystem resourceSystem = this._system.GetResourceSystem();
         //Give Resource
         for (int i = 0; i < quantities.Count; i++)
         {
             switch (resourcesTypes[i])
             {
                 case RessourceSystem.ResourceType.Police:
-                    resourceSystem.AddResourcePolice(quantities[i]);
+                    _resourceSystem.AddResourcePolice(quantities[i]);
                     break;
                 case RessourceSystem.ResourceType.Firefighter:
-                    resourceSystem.AddResourceFirefighter(quantities[i]);
+                    _resourceSystem.AddResourceFirefighter(quantities[i]);
                     break;
                 case RessourceSystem.ResourceType.Swat:
-                    resourceSystem.AddResourceSwat(quantities[i]);
+                    _resourceSystem.AddResourceSwat(quantities[i]);
                     break;
             }  
         }
 
         this.quantities.Clear();
         this.resourcesTypes.Clear();
-
-        
     }
 
     public void GiveResource(RessourceSystem.ResourceType type, int quantity)
@@ -138,12 +133,11 @@ public class Room : MonoBehaviour
             this._evenement.AddUnitToEvent((int)_typeResource, quantity);
     }
 
-
-    void Update()
+    public void UpdateRoom(RoomSystem roomSystem)
     {
-        if (!_system.GetPause())
+        if (!roomSystem.GetPause())
         {
-            if (!_system.GetIsFinish())
+            if(!roomSystem.GetIsFinish())
             {
                 if (this._evenement != null)
                 {
@@ -168,28 +162,22 @@ public class Room : MonoBehaviour
                                 this.ClearEvent();
                                 break;
                             case EventState.EventBreach:
-                                this.SetDead();
+                                this._bars.SetBar(_id, 0);
+                                this.SetDead(roomSystem);
+                                
                                 break;
                         }
                     }
-                }
-            }
-        }
-    }
 
-    private void FixedUpdate()
-    {
-        if (!_system.GetPause())
-        {
-            if(!_system.GetIsFinish())
-            {
-                if (this._evenement != null)
-                {
-                    this._evenement.EvenementUpdate();
+                    //Refresh bar
+                    if (this._evenement != null)
+                    {
+                        this._evenement.EvenementUpdate();
 
-                    float time = this._evenement.GetEventActualTimer() / this._evenement.GetEventMaxTime();
-                    if (_bars != null)
-                        _bars.SetBar(this._id, time);
+                        float time = this._evenement.GetEventActualTimer() / this._evenement.GetEventMaxTime();
+                        if (_bars != null && !isDestroy)
+                            _bars.SetBar(this._id, time);
+                    }
                 }
             }
         }
@@ -205,42 +193,40 @@ public class Room : MonoBehaviour
             float PourCent = 0.0f;
             if (_evenement != null && _evenement.eventIsAlive)
             {
-                RessourceSystem resourceSystem = this._system.GetResourceSystem();
-
-                if (resourceSystem.FirefighterTaken > 0)
+                if (_resourceSystem.FirefighterTaken > 0)
                 {
                     if (2 == (int) _evenement.eventType)
                     {
-                        PourCent += resourceSystem.FirefighterTaken / _evenement.numberOfUnitNeeded;
+                        PourCent += _resourceSystem.FirefighterTaken / _evenement.numberOfUnitNeeded;
                     }
                     else
                     {
-                        PourCent += resourceSystem.FirefighterTaken * _evenement.badUnitModifier /
+                        PourCent += _resourceSystem.FirefighterTaken * _evenement.badUnitModifier /
                                     _evenement.numberOfUnitNeeded;
                     }
 
                 }
-                else if (resourceSystem.PoliceTaken > 0)
+                else if (_resourceSystem.PoliceTaken > 0)
                 {
                     if (1 == (int) _evenement.eventType)
                     {
-                        PourCent += resourceSystem.PoliceTaken / _evenement.numberOfUnitNeeded;
+                        PourCent += _resourceSystem.PoliceTaken / _evenement.numberOfUnitNeeded;
                     }
                     else
                     {
-                        PourCent += resourceSystem.PoliceTaken * _evenement.badUnitModifier /
+                        PourCent += _resourceSystem.PoliceTaken * _evenement.badUnitModifier /
                                     _evenement.numberOfUnitNeeded;
                     }
                 }
-                else if (resourceSystem.SwatTaken > 0)
+                else if (_resourceSystem.SwatTaken > 0)
                 {
                     if (0 == (int) _evenement.eventType)
                     {
-                        PourCent += resourceSystem.SwatTaken / _evenement.numberOfUnitNeeded;
+                        PourCent += _resourceSystem.SwatTaken / _evenement.numberOfUnitNeeded;
                     }
                     else
                     {
-                        PourCent += resourceSystem.SwatTaken * _evenement.badUnitModifier /
+                        PourCent += _resourceSystem.SwatTaken * _evenement.badUnitModifier /
                                     _evenement.numberOfUnitNeeded;
                     }
                 }
@@ -284,6 +270,8 @@ public class RoomSystem : MonoBehaviour
     [SerializeField] private GameObject _prefab_logo_fire;
     [SerializeField] private GameObject _prefab_logo_labotaryBroken;
 
+    [SerializeField] private List<GameObject> _objectRooms;
+
     List<Room> rooms;
 
     private RessourceSystem _resourceSystem;
@@ -294,15 +282,28 @@ public class RoomSystem : MonoBehaviour
         _gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
         _resourceSystem = GameObject.Find("RessourceSystem").GetComponent<RessourceSystem>();
         rooms = new List<Room>();
-        GameObject[] items = GameObject.FindGameObjectsWithTag("Room");
 
-        for (int i = items.Count()-1; i > -1; i--)
+        foreach(GameObject objectRoom in _objectRooms)
         {
-            items[i].AddComponent<Room>();
-            items[i].GetComponent<Room>().SetSystem(this);
-            items[i].GetComponent<Room>().SetID(rooms.Count);
-            rooms.Add(items[i].GetComponent<Room>());
+            objectRoom.AddComponent<Room>();
+            objectRoom.GetComponent<Room>().SetResourceSystem(_resourceSystem);
+            objectRoom.GetComponent<Room>().SetID(rooms.Count);
+            rooms.Add(objectRoom.GetComponent<Room>());
         }
+    }
+
+    private void FixedUpdate()
+    {
+        foreach(Room room in rooms)
+        {
+            room.UpdateRoom(this);
+        }
+    }
+
+    public void SetEvenenement(int id, Evenement evenement)
+    {
+        GameObject logoEvent = Instantiate(GetPrefabLogo(evenement.eventType), rooms[id].gameObject.transform, false);
+        this.rooms[id].SetEvenement(evenement, logoEvent);
     }
 
     public bool GetPause() {
@@ -337,6 +338,19 @@ public class RoomSystem : MonoBehaviour
         return room;
     }
 
+    public int GetRandomRoomId()
+    {
+        List<Room> roomsTmp = new List<Room>(rooms);
+        int id = UnityEngine.Random.Range(0, rooms.Count);
+        Room room = this.rooms[id];
+        if (room.GetHasEvent())
+        {
+            roomsTmp.Remove(room);
+            id = GetRandomRoomId(rooms);
+        }
+        return id;
+    }
+
     private Room GetRandomRoom(List<Room> rooms)
     {
         Room room = this.rooms[UnityEngine.Random.Range(0, rooms.Count)];
@@ -346,6 +360,18 @@ public class RoomSystem : MonoBehaviour
             room = GetRandomRoom();
         }
         return room;
+    }
+
+    private int GetRandomRoomId(List<Room> rooms)
+    {
+        int id = UnityEngine.Random.Range(0, rooms.Count);
+        Room room = this.rooms[id];
+        if (room.GetHasEvent())
+        {
+            rooms.Remove(room);
+            id = GetRandomRoomId();
+        }
+        return id;
     }
 
     public GameObject GetPrefabLabotaryBroken()
@@ -407,14 +433,12 @@ public class RoomSystem : MonoBehaviour
             if (!rooms[i].GetIsDestroy())
                 roomsAlive.Add(rooms[i]);
         }
-
         
         List<Transform> list = new List<Transform>();
         foreach (Room room in roomsAlive)
         {
             list.Add(room.gameObject.transform);
         }
-
         return list;
     }
 }
